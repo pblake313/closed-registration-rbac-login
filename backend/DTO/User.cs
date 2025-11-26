@@ -1,6 +1,6 @@
 namespace SAConstruction.DTO
 {
-    public class AdminUserDto
+    public class UserDto
     {
         public int UserId { get; set; }
 
