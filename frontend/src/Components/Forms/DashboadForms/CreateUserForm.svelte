@@ -60,7 +60,6 @@
 
         try {
             isLoading = true
-            console.log('hittting here...')
 
             const response = await adminFetch('/Admin/Create-User', {
                 method: 'POST',
@@ -86,7 +85,6 @@
                 }
             }
             upsertUserIntoAllUserAccounts(userObj)
-            console.log('push notification here...')
             pushNotification('Success!', 'The account was created successfully.', 'success', 1.5, false)
             goto('/dashboard/accounts')
 

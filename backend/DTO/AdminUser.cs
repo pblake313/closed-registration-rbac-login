@@ -8,6 +8,8 @@ namespace SAConstruction.DTO
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
+        public string? PasswordHash {get; set;}
+
         public DateTime? DateCreated { get; set; }
         public DateTime? UpdatedAt { get; set; }
 

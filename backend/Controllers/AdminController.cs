@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SAConstruction.DTO;
+using SAConstruction.Services;
 using System.Text.Json;
 
 namespace SAConstruction.Controllers
@@ -18,114 +19,122 @@ namespace SAConstruction.Controllers
             _dapper = new DataContextDapper(config);
         }
 
+        
+        private readonly CreateUserService _userService = new();
 
         [HttpPost("Create-User")]
         public IActionResult AddUser([FromBody] CreateUserRequest req)
         {
-            Console.WriteLine("======= Incoming CreateUserRequest =======");
-            Console.WriteLine(JsonSerializer.Serialize(req, new JsonSerializerOptions
+
+            try
             {
-                WriteIndented = true
-            }));
+                var result = _userService.CreateUser(req);
 
-            // 0) CHECK IF EMAIL ALREADY EXISTS
-            string sqlCheckEmail = @"
-                SELECT COUNT(*) 
-                FROM Users.AccountData
-                WHERE Email = @Email;
-            ";
-
-            int emailCount = _dapper.LoadDataSingle<int>(sqlCheckEmail, new { Email = req.Email });
-
-            if (emailCount > 0)
+                Console.WriteLine(result);
+                return Ok(result);
+            } catch (Exception ex)
             {
-                return StatusCode(400, new
-                {
-                    errorMessage = "A user with that email already exists."
-                });
-            }
-
-            // 1) Insert user, get new UserId + dates
-            string sqlInsertUser = @"
-                INSERT INTO Users.AccountData (
-                    Email,
-                    FirstName,
-                    LastName,
-                    DateCreated,
-                    UpdatedAt
-                )
-                OUTPUT 
-                    INSERTED.UserId,
-                    INSERTED.DateCreated,
-                    INSERTED.UpdatedAt
-                VALUES (
-                    @Email,
-                    @FirstName,
-                    @LastName,
-                    SYSUTCDATETIME(),
-                    SYSUTCDATETIME()
-                ); 
-            ";
-
-            var userParams = new
-            {
-                Email = req.Email,
-                FirstName = req.FirstName,
-                LastName = req.LastName
+                return BadRequest(new {message = ex.Message});
             };
 
-            NewUserRow newUser = _dapper.LoadDataSingle<NewUserRow>(sqlInsertUser, userParams);
+            // // 0) CHECK IF EMAIL ALREADY EXISTS
+            // string sqlCheckEmail = @"
+            //     SELECT COUNT(*) 
+            //     FROM Users.AccountData
+            //     WHERE Email = @Email;
+            // ";
 
-            Console.WriteLine($"New UserId: {newUser.UserId}");
+            // int emailCount = _dapper.LoadDataSingle<int>(sqlCheckEmail, new { Email = req.Email });
 
-            // 2) Insert permissions for that user
-            string sqlInsertPermissions = @"
-                INSERT INTO Users.UserPermissions (
-                    UserId,
-                    JobPostings,
-                    AccountManagement,
-                    ViewCandidates
-                )
-                VALUES (
-                    @UserId,
-                    @JobPostings,
-                    @AccountManagement,
-                    @ViewCandidates
-                );
-            ";
+            // if (emailCount > 0)
+            // {
+            //     return StatusCode(400, new
+            //     {
+            //         errorMessage = "A user with that email already exists."
+            //     });
+            // }
 
-            var permParams = new
-            {
-                UserId = newUser.UserId,
-                JobPostings = req.JobPostings,
-                AccountManagement = req.AccountManagement,
-                ViewCandidates = req.ViewCandidates
-            };
+            // // 1) Insert user, get new UserId + dates
+            // string sqlInsertUser = @"
+            //     INSERT INTO Users.AccountData (
+            //         Email,
+            //         FirstName,
+            //         LastName,
+            //         DateCreated,
+            //         UpdatedAt
+            //     )
+            //     OUTPUT 
+            //         INSERTED.UserId,
+            //         INSERTED.DateCreated,
+            //         INSERTED.UpdatedAt
+            //     VALUES (
+            //         @Email,
+            //         @FirstName,
+            //         @LastName,
+            //         SYSUTCDATETIME(),
+            //         SYSUTCDATETIME()
+            //     ); 
+            // ";
 
-            bool permsInserted = _dapper.ExecuteSql(sqlInsertPermissions, permParams);
+            // var userParams = new
+            // {
+            //     Email = req.Email,
+            //     FirstName = req.FirstName,
+            //     LastName = req.LastName
+            // };
 
-            if (!permsInserted)
-            {
-                // you could also roll back the user row here if you want to be fancy
-                return StatusCode(500, new
-                {
-                    errorMessage = "Failed to save user permissions."
-                });
-            }
+            // NewUserRow newUser = _dapper.LoadDataSingle<NewUserRow>(sqlInsertUser, userParams);
 
-            // 3) Return something useful to the frontend
-            return Ok(new
-            {
-                userId = newUser.UserId,
-                email = req.Email,
-                firstName = req.FirstName,
-                lastName = req.LastName,
-                jobPostings = req.JobPostings,
-                accountManagement = req.AccountManagement,
-                viewCandidates = req.ViewCandidates,
-                dateCreated = newUser.DateCreated,
-                updatedAt = newUser.UpdatedAt
-            });
+            // Console.WriteLine($"New UserId: {newUser.UserId}");
+
+            // // 2) Insert permissions for that user
+            // string sqlInsertPermissions = @"
+            //     INSERT INTO Users.UserPermissions (
+            //         UserId,
+            //         JobPostings,
+            //         AccountManagement,
+            //         ViewCandidates
+            //     )
+            //     VALUES (
+            //         @UserId,
+            //         @JobPostings,
+            //         @AccountManagement,
+            //         @ViewCandidates
+            //     );
+            // ";
+
+            // var permParams = new
+            // {
+            //     UserId = newUser.UserId,
+            //     JobPostings = req.JobPostings,
+            //     AccountManagement = req.AccountManagement,
+            //     ViewCandidates = req.ViewCandidates
+            // };
+
+            // bool permsInserted = _dapper.ExecuteSql(sqlInsertPermissions, permParams);
+
+            // if (!permsInserted)
+            // {
+            //     // you could also roll back the user row here if you want to be fancy
+            //     return StatusCode(500, new
+            //     {
+            //         errorMessage = "Failed to save user permissions."
+            //     });
+            // }
+
+            // // 3) Return something useful to the frontend
+            // return Ok(new
+            // {
+            //     userId = newUser.UserId,
+            //     email = req.Email,
+            //     firstName = req.FirstName,
+            //     lastName = req.LastName,
+            //     jobPostings = req.JobPostings,
+            //     accountManagement = req.AccountManagement,
+            //     viewCandidates = req.ViewCandidates,
+            //     dateCreated = newUser.DateCreated,
+            //     updatedAt = newUser.UpdatedAt
+            // });
         }
 
         [HttpGet("Get-Users")]
@@ -151,7 +160,7 @@ namespace SAConstruction.Controllers
             // 1) Load as dynamic so we can see exactly what’s coming back
             var rows = _dapper.LoadData<dynamic>(sql).ToList();
 
-            Console.WriteLine("======= Raw rows from DB =======");
+            // Console.WriteLine("======= Raw rows from DB =======");
             // Console.WriteLine(JsonSerializer.Serialize(rows, new JsonSerializerOptions
             // {
             //     WriteIndented = true
