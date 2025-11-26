@@ -1,0 +1,110 @@
+
+  .wrapTitle {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+  }
+  .megaSwipeWrap {
+    width: 100%;
+    overflow: hidden;
+  }
+  .finjoint {
+    font-size: 18px;
+    background: #fff;
+    cursor: grab;
+    user-select: none;
+    border-radius: 10px;
+
+  }
+  .imageContainer {
+      height: 60vh;
+      max-height: 500px;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+  }
+  .imageContainer img {
+      width: 100%; /* Make the image width responsive to the container */
+      height: 100%; /* Make the image height responsive to the container */
+      object-fit: cover; /* Cover the area without specifying min-width/min-height */
+      object-position: center; /* Adjust this value to control the focus area of the image */
+  }
+  .wrapImageSwiper {
+      width: 90%;
+      margin: auto;
+      padding-top:  150px;
+      max-width: 1600px;
+      overflow: hidden;
+  }
+  .finnanext {
+      padding: 0px;
+      background-color: transparent;
+      margin: 0px;
+      border: none;
+      margin-left: 25px;
+  }
+  .finnaback {
+      padding: 0px;
+      background-color: transparent;
+      margin: 0px;
+      border: none;
+  }
+
+.swiper.finnaswipe {
+    overflow: visible !important;
+}
+.buttonsSwipeRap {
+    display: flex;
+    margin-bottom: 15px;
+}
+.mobileButtonsSwiperWRap {
+    display: flex;
+}
+.mobileSwipNav {
+    display: none;
+    margin-top: 10px;
+}
+.wrapSliderTitle {
+    width: calc(100% - 125px);
+}
+  @media (max-width: 1165px){
+      .wrapAll{
+          width: 90%;
+      }
+  }
+  @media (max-width: 1250px){
+    .wrapImageSwiper {
+        overflow: visible;
+    }
+  }
+  @media (max-width: 1000px){
+      .wrapImageSwiper{
+          padding: 75px 0px 0px 0px;
+
+      }
+
+
+  }
+  @media (max-width: 683px){
+      .wrapTitle{
+          align-items: flex-end;
+      }
+      .imageContainer {
+          height: 65vh;
+      }
+
+
+  }
+@media(max-width: 600px){
+    .buttonsSwipeRap {
+        display: none;
+    }
+    .wrapSliderTitle {
+        width: 100%;
+    }
+    .mobileSwipNav {
+        display: flex;
+        justify-content: space-between;
+    }
+
+}

@@ -1,0 +1,107 @@
+.megaTest {
+    width: 100%;
+    overflow: hidden;
+}
+.wrapTests {
+    width: 90%;
+    margin: auto;
+    padding-top: 150px;
+    max-width: 1650px;
+}
+.testsLeft {
+    margin-bottom: 25px;
+
+}
+.swiper-wrapper  {
+    position: relative;
+    height: 100%;
+}
+.testsRight {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#services {
+    margin-bottom: 5px;
+    color: black;
+}
+
+.testSwiper {
+    margin: auto;
+    width: 100%;
+    max-width: 650px;
+    cursor: grab;
+    overflow: hidden;
+}
+
+.testSingleWrap{
+    height: 100%;
+    position: relative;
+    height: 270px;
+    width: 100%;
+    display: flex;
+
+}
+
+.testimonialCard {
+    padding: 20px;
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    width: calc(100% - 44px);
+    margin-left: 1px;
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.testimonalInside {
+    text-align: center;
+}
+.reviewButtonFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 25px;
+}
+.mobileTestFlex {
+    display: flex;
+}
+.bottomerFlex {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    display: none;
+}
+.starFlex {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+}
+@media (max-width: 1000px){
+    .wrapTests{
+        padding-top: 75px;
+    }
+    .testSwiper {
+        max-width: none;
+        overflow: visible;
+    }
+}
+@media (max-width: 600px){
+    .testSingleWrap {
+        height: 400px;
+    }
+    .deskbhold {
+        display: none;
+    }
+    .bottomerFlex {
+        display: flex;
+    }
+}
+@media (max-width: 430px){
+    .testSingleWrap {
+        height: 425px;
+    }
+}
+

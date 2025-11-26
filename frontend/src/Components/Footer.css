@@ -1,0 +1,168 @@
+.footWrap {
+    margin: auto;
+    padding: 50px 0px;
+    position: relative;
+}
+.insideFoot {
+    width: 80%;
+    margin: auto;
+    max-width: 1650px;
+}
+.logoAndLinks {
+    width: 25%;
+    position: relative;
+
+}
+
+.logoAndLinks img {
+    height: 100px;
+}
+.innerFlex {
+    display: flex;   
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+}
+.menuHead {
+    color: white;
+}
+.footLink {
+    display: block;
+    color: rgb(165, 165, 165);
+    line-height: 1.8em;
+    font-size: 11pt;
+    border-bottom: 1px solid transparent;    
+    transition: .5s;
+    width: fit-content;
+
+}
+.footLink:hover {
+    border-bottom: 1px solid white;    
+    transition: .5s;
+    color: white;
+}
+.newsLetterAndLinks {
+    width: 75%;
+    position: relative;
+
+
+}
+.newsLetterForm {
+    margin-bottom: 50px;
+}
+.footLinkers {
+    width: 100%;
+    margin-left: 0px;
+    display: flex;
+
+}
+.menu {
+    width: 33%;
+}
+
+.finna {
+    width: 100%;
+    position: absolute;
+    height: calc(100%);
+    top: 0px;
+    z-index: -5;
+    overflow: hidden;
+}
+.finna svg {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    transform: translate(-50%, -50%);
+    /* No fixed scale; scaling is dynamic based on aspect ratio */
+}
+
+#SA {
+    font-size: 9pt;
+    padding: 0px;
+    margin: 0px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+	font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: bold;
+    color: white;
+}
+#numby {
+    font-size: 9pt;
+    padding: 0px;
+    margin: 0px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+	font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(230, 230, 230);
+}
+.mobileFootLogo {
+    display: none;
+}
+@media (max-width: 1165px){
+    .insideFoot{
+        width: 90%;
+    }
+}
+
+@media (max-width: 900px) {
+    .innerFlex {
+        flex-direction: column-reverse;
+    }
+    .logoAndLinks {
+        width: 100%;
+        margin-top: 50px;
+        text-align: center;
+        padding-top: 25px;
+        border-top: 1px solid rgb(255, 255, 255);
+    }
+    .newsLetterAndLinks {
+        width: 100%;
+    }
+    .finna svg {
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        transform: translate(-50%, -50%);
+        /* No fixed scale; scaling is dynamic based on aspect ratio */
+    }
+    .deskFootLogo{
+        display: none;
+    }
+    .mobileFootLogo {
+        display: block;
+    }
+}
+@media (max-width: 755px) {
+    .footLinkers {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+    }
+    .menu {
+        width: 100%;
+    }
+
+}
+@media (max-width: 500px) {
+    .footLinkers {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}
+
+@media (pointer:coarse ){
+    .footLink:hover {
+        display: block;
+        color: rgb(165, 165, 165);
+        line-height: 1.8em;
+        font-size: 11pt;
+        border-bottom: 1px solid transparent;    
+        transition: .5s;
+        width: fit-content;
+    
+    }
+}

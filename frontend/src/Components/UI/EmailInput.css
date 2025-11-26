@@ -1,0 +1,57 @@
+.inputWrapper {
+    margin-bottom: 20px;
+    position: relative;
+}
+.shadowWrapper {
+    box-shadow: 0px 0px 5px rgba(76, 76, 76, 0.278);
+    border-radius: 5px; /* Match input border-radius */
+    width: calc(100%);
+}
+
+input {
+    padding: 10px;
+    outline: none;
+    border: 2px solid transparent;
+    width: calc(100% - 24px);
+    border-radius: 5px;
+    color: rgb(111, 111, 111);
+    transition: 0.5s;
+
+}
+
+input:focus {
+    border: 2px solid #FF7B00;
+
+}
+input::placeholder {
+    color: rgb(174, 174, 174);
+}
+label {
+    display: block;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 600;
+    font-size: 11pt;
+    margin-bottom: 8px;
+
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 40px rgb(255, 255, 255) inset !important;
+    -webkit-text-fill-color: rgb(111, 111, 111) !important;
+    border-color: white;
+    /* keep box shadow the same */
+    -webkit-box-shadow:  0px 0px 5px rgba(76, 76, 76, 0.278);
+}
+
+input:-webkit-autofill:focus {
+    border-color: #FF7B00;
+
+}
+.invalid {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.096);
+    transition: .3s;
+}

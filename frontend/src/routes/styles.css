@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+a, button {
+	-webkit-tap-highlight-color: transparent;
+  }
+
+html {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    touch-action: manipulation; /*This avoids zoom when you double tap on pointer: coarse devices*/
+      
+}
+body {
+    padding: 0px;
+    height: 100%;
+
+    margin: 0px;
+    position: relative;
+}
+h1 {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	font-optical-sizing: auto;
+	padding: 0px;
+	margin: 0px;
+	margin: 15px 0px; 
+
+}
+h2 {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	font-optical-sizing: auto;
+	padding: 0px;
+	margin: 12px 0px; 
+	font-size: 30pt;
+
+}
+h3 {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	font-optical-sizing: auto;
+	padding: 0px;
+	margin: 0px;
+	margin: 10px 0px; 
+}
+h4 {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	font-optical-sizing: auto;
+	padding: 0px;
+	margin: 0px;
+	margin: 10px 0px; 
+}
+p {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	padding: 0px;
+	margin: 0px;
+	line-height: 1.8;
+	color: rgb(111, 111, 111);
+	font-size: 12pt;
+}
+button {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	padding: 14px 30px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 1px;
+	border: 1px solid #FF7B00;
+	font-weight: bold;
+	user-select: none;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	font-family: "Plus Jakarta Sans", sans-serif;
+}
+li {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	padding: 0px;
+	margin: 0px;
+	line-height: 1.8;
+	color: rgb(111, 111, 111);
+}
+input {
+	font-family: "Plus Jakarta Sans", sans-serif;
+
+}
+textarea {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	resize: none;
+}
+@media (max-width: 875px){
+	h2 {
+		font-size: 28pt;
+	}
+}
+@media (max-width: 600px){
+	h2 {
+		font-size: 24pt;
+	}
+}
+
+@media (max-width: 450px) {
+	h2 {
+		font-size: 22pt;
+	}
+}

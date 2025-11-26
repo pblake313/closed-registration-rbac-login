@@ -1,0 +1,256 @@
+.wrapGrid {
+    width: 90%;
+    max-width: 1600px;
+    padding-top: 150px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.deskbwr {
+    margin-bottom: 15px;
+    display: none;
+}
+.headWrap {
+    width: 50%;
+}
+.gridCity {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+.roofIcon {
+    width: 70px;
+}
+.finnaItem {
+    width: calc(100% - 80px);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.227);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: .3s;
+
+}
+.finnaItem:hover{
+    border: 2px solid #FF7B00;
+    transition: .3s;
+}
+.finnaItem img {
+    width: 35px;
+}
+.resiflex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.holA {
+    overflow: hidden;
+    opacity: 0;
+    transition: .3s;
+    padding-right: 15px;
+    animation: bouncePadding 1.5s ease-in-out infinite;
+}
+@keyframes bouncePadding {
+    0% {
+        padding-right: 15px;
+    }
+    50% {
+        padding-right: 0px;
+    }
+    100% {
+        padding-right: 15px;
+    }
+}
+.finnaItem:hover .resiflex .holA {
+    transition: .3s;
+    opacity: 1;
+}
+.touchMore {
+    display: none;
+}
+
+.swipebox {
+    height: 500px;
+    width: 100%;
+}
+.holdupswipe {
+    width: 90%;
+    overflow: visible;
+    max-width: 1600px;
+}
+.linkswiper {
+    overflow: visible;
+    margin: auto;
+}
+.megaSwiperWrapper {
+    width: 100%;
+    overflow: hidden;
+}
+.wrapLinkSwiper {
+    overflow: visible;
+}
+.wrapServiceLink {
+    display: block;
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: auto;
+    position: relative;
+}
+.serviceLinkBack {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+.serviceOverlay {
+    position: absolute;
+    height: 100%;    
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+.cardTex {
+    color: rgba(255, 255, 255, 0.808);
+}
+.cardGradient {
+    position: absolute;
+    height: 80%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.445), transparent);
+}
+.cardPointerFlex {
+    position: absolute;
+    bottom:  25px;
+    left: 25px;
+    z-index: 5;
+    width: calc(100% - 50px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 47px;
+}
+.wrapPbutton {
+    width: 40px;
+    overflow: hidden;
+    transition: .1s;
+
+}
+.wrapMegaButton {
+    width: 0px;
+    height: 47px;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity .5s ease .5s;
+}
+.wrapServiceLink:hover .cardPointerFlex .wrapMegaButton {
+    width: 100%;
+    opacity: 1;
+    transition: opacity .3s ease .3s, width 0s;
+
+
+}
+.wrapServiceLink:hover .cardPointerFlex .wrapPbutton {
+    width: 0px;
+    height: fit-content;
+}
+
+.cardHead {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: calc(100% - 50px);
+    z-index: 5;
+
+}
+.cardHeadFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.slideNavButtonsWrap {
+    display: none;
+}
+.bfla {
+    display: none;
+}
+.wrapreshead {
+    width: calc(100% - 125px);
+}
+@media (max-width: 1165px){
+    .wrapGrid{
+        width: 90%;
+    }
+}
+@media(max-width: 1100px){
+    .slideNavButtonsWrap {
+        display: block;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .wrapServiceLink {
+
+        cursor: grab;
+    }
+    .deskbwr {
+        display: flex;
+    }
+}
+@media (max-width: 1000px){
+    .gridCity {
+        grid-template-columns: repeat(1, 1fr);
+        
+    }
+    .headWrap {
+        width: 80%;
+    }
+    .wrapGrid {
+        padding: 75px  0px 0px 0px;
+    }
+}
+
+@media (max-width: 650px){
+
+    .headWrap {
+        width: 100%;
+    }
+}
+
+@media(max-width: 600px){
+    .wrapreshead {
+        width: 100%;
+    }
+    .deskbwr {
+        display: none;
+    }
+    .bfla {
+        display: flex;
+    }
+}
+
+@media(pointer: coarse){
+    .finnaItem:hover .resiflex .holA {
+        opacity: 0;
+    }
+    .finnaItem:hover{
+        border: 2px solid transparent;
+        transition: .3s;
+    }
+    .touchMore {
+        display: block;
+        margin-top: 15px;
+    }
+    .wrapPbutton {
+        width: 0%;
+    }
+    .wrapMegaButton {
+        width: 100%;
+        opacity: 1;
+    }
+
+}

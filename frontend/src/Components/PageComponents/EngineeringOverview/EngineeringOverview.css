@@ -1,0 +1,44 @@
+.overviewWrap {
+    width: 80%;
+    margin: auto;
+    padding: 20px 0px 100px 0px;
+    max-width: 1650px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
+    gap: 10px; /* Adjust the gap between items */
+    list-style: none; /* Removes default list styling */
+    padding: 0; /* Removes default padding */
+  }
+  .grid-container li {
+    padding: 10px; /* Padding inside each item */
+    border: 1px solid #cccccc5c; /* Border for each item */
+  }
+  .grid-container li:hover {
+    padding: 10px; /* Padding inside each item */
+    border: 1px solid #FF7B00; /* Border for each item */
+  }
+.aliker {
+    text-decoration: underline;
+	color: rgb(111, 111, 111);
+}
+.aliker:hover {
+    color: black;
+}
+
+@media (max-width: 1165px){
+  .overviewWrap{
+      width: 90%;
+  }
+}
+@media (max-width: 830px){
+  .grid-container{
+      grid-template-columns: repeat(2, 1fr); /* Creates 3 columns */
+  }
+}
+@media (max-width: 630px){
+  .grid-container{
+      grid-template-columns: repeat(1, 1fr); /* Creates 3 columns */
+  }
+}

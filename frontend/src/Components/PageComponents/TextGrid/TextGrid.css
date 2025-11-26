@@ -1,0 +1,113 @@
+.wrapAllTextGrid {
+    margin: auto;
+    max-width: 1600px;
+    padding:  100px 0px 0px 0px;
+    width: 90%;
+}
+.megaTextGridWrap {
+    width: 100%;
+    overflow: hidden;
+}
+.textGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+}
+.textGridItem {
+	border-radius: 10px;
+    width: calc(100% - 50px);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f3f3f3;
+    background-color: #f3f3f3;
+}
+.flexoutInner {
+    height: calc(100% - 50px);
+    width: calc(100% - 50px);
+    margin: auto;
+    margin-top: 25px;
+    z-index: 2;
+    margin-bottom: 25px;
+    min-height: 200px;
+}
+.cardsrap {
+    overflow: visible;
+}
+.holdfin {
+    overflow: visible;
+}
+.textgriditemimage {
+    position: absolute;
+    z-index: -2;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.textgriditemOverlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+.gte {
+    color: rgb(230, 230, 230);
+}
+.gridswipecontrolrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    display: none;
+}
+.conrolJ{
+    display: flex;
+
+}
+.wrapGridTit {
+    width: calc(100% - 100px);
+}
+.gridItemFlez {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.deskcontrollas {
+    display: none;
+}
+@media (max-width: 1250px){
+    .deskcontrollas {
+        display: flex;
+    }
+    .cardsrap {
+        cursor: grab;
+    }
+}
+@media (max-width: 1100px){
+    .flexoutInner {
+        min-height: 220px;
+    }
+}
+@media (max-width: 1000px){
+    .wrapAllTextGrid {
+        padding:  75px 0px 0px 0px;
+    } 
+}
+@media (max-width: 800px){
+    .flexoutInner {
+        min-height: 210px;
+    }
+}
+@media (max-width: 600px){
+    .gridswipecontrolrap {
+        display: flex;
+    }
+    .wrapGridTit {
+        width: 100%;
+    }
+    .deskcontrollas {
+        display: none;
+    }
+}
