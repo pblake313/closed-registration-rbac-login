@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("DefaultCors", corsBuilder =>
     {
         corsBuilder
-            .WithOrigins("Myotherfrontendurl..", "My other URl..")  // ! tells C# to relax; we know it's set
+            .WithOrigins("http://localhost:5173") 
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -27,8 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
+else
+{
+    app.UseHttpsRedirection(); // this just forces the app to use https
+}
 
 app.UseCors("DefaultCors");
 

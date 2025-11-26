@@ -1,0 +1,108 @@
+.flexInsideButton{
+    display: flex;
+    align-items: center;
+}
+
+.saButton {
+    border-radius: 4px;
+}
+.primary {
+    background-color: #FF7B00;
+    color: white;
+}
+.primary:hover {
+    background-color: #da6a00;
+}
+
+.secondary {
+    background-color: transparent;
+    color: rgb(60, 60, 60);
+    border-color: lightgray;
+}
+.secondary:hover {
+    background-color: rgb(60, 60, 60);  
+    color: white;
+}
+
+
+.darkback {
+    background-color: #3c3c3c;  
+    border-color: #3c3c3c;
+    color: white;
+
+}
+.darkback:hover {
+    background-color: white;
+    color: rgb(60, 60, 60);
+}
+.stayDark {
+    background-color: #3c3c3c;  
+    border-color: #3c3c3c;
+    color: white;
+
+}
+
+.stayWhite{
+    background-color: #eeeeee;
+    color: black;
+    border-color: #eeeeee;
+}
+.fuller {
+    width: 100%;
+}
+.noPad{
+    padding: 7px 12px 7px 8px;
+    border-radius: 4px;
+}
+.fuller .flexInsideButton {
+    width: fit-content;
+    margin: auto;
+}
+
+
+/* icons */
+.containIcon{
+    height: 18px;
+    width: 18px;
+    position: relative;
+    margin-right: 5px;
+}
+.singleIconWrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (pointer: coarse) {
+    .primary:hover {
+        background-color: #FF7B00;
+    }
+
+    .secondary:hover {
+        background-color: transparent;
+        color: white;
+    }
+
+    .darkback:hover {
+        background-color: #3c3c3c;  
+        color: rgb(60, 60, 60);
+    }
+    .stayWhite:hover{
+        background-color: #eeeeee;
+        color: black;
+        border-color: #eeeeee;
+    }
+}
+.saButton.shake {
+    animation: saShake 0.45s ease;
+}
+
+@keyframes saShake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-4px); }
+    40%  { transform: translateX(4px); }
+    60%  { transform: translateX(-4px); }
+    80%  { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}

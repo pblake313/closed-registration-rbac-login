@@ -1,0 +1,47 @@
+.crumbStart{
+    height: 25px;
+    width: 1px;
+    background-color: rgba(211, 211, 211, 0.473);
+    margin-right: 5px;
+}
+
+.breadCrumbsWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.homeIconWrap{
+    width: fit-content;
+    height: fit-content;
+    display: block;
+    padding: 3px 2px 0px 2px;
+    border-radius: 5px;
+    opacity: .6;
+    transition: .3s;
+}
+.homeIconWrap:hover {
+    background-color: rgba(211, 211, 211, 0.349);
+    opacity: 1;
+    transition: .3s;
+
+}
+.crumbLink {
+    padding: 5px;
+    border-radius: 5px;
+    opacity: .7;
+    margin-left: 5px;
+    font-size: 11pt;
+}
+.crumbLink:hover {
+    background-color: rgba(211, 211, 211, 0.349);
+}
+.activeCrumb{
+    font-weight: bold;
+    opacity: 1;
+}
+.holdFolder{
+    height: fit-content;
+    padding-top: 5px;
+    opacity: .3;
+}

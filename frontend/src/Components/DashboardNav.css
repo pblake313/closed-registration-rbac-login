@@ -1,0 +1,92 @@
+.containHomeNav{
+    padding: 0px;
+    margin: 0px;
+}
+
+.loginNavFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.wrapDashNavLogo{
+    height: 25px;
+    width: 25px;
+}
+.empText{
+    width: calc(100% - 35px);
+
+}
+.empText h1 {
+    padding: 0px;
+    margin: 0px;
+}
+.dashNavLink{
+    display: block;
+    width: 100%;
+    padding: 8px;
+    width: calc(100% - 16px);
+    transition: .3s;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0px 5px 5px 0px;
+
+}
+.dashNavLink:hover {
+    background-color: rgba(211, 211, 211, 0.171);
+}
+.dashNavLink::before {
+    content: "";
+    height: 100%;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 5px ;
+    width: 0px;
+}
+.dashNavLink:hover{
+    padding: 8px 8px 8px 15px;
+    width: calc(100% - 23px);
+    transition: .3s;
+}
+.dashNavLink:hover::before{
+    width: 3px;
+    transition: .3s;
+    background-color: lightgray;
+
+}
+.containNavLink {
+    /* border: 1px solid red; */
+}
+.active {
+    background-color: rgba(211, 211, 211, 0.274);
+    padding: 8px 8px 8px 15px;
+    width: calc(100% - 23px);
+    transition: .3s;
+    font-weight: bold;
+}
+.active:hover {
+    background-color: rgba(211, 211, 211, 0.274);
+
+}
+.active::before {
+    content: "";
+    height: 100%;
+    width: 3px;
+    background-color: #FF7B00;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 5px;
+    transition: .3s;
+}
+.active:hover::before{
+    width: 3px;
+    transition: .3s;
+    background-color: #FF7B00;
+
+}

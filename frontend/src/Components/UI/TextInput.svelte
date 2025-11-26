@@ -1,26 +1,42 @@
 <script lang="ts">
-    import './TextInput.css'
-    import { createEventDispatcher } from 'svelte';
+    import './TextInput.css';
 
     export let label: string | null = null;
     export let value: string | null = null;
     export let id: string | null = null;
     export let placeholder: string | null = null;
-    export let isInvalid: boolean = false;
+    export let showInputError: boolean = true;
+    export let inputErrorText: string | null = null;
+    export let maxChar: number = 150;
 
-    const dispatch = createEventDispatcher();
+    // Svelte 5-style callback prop
+    export let onTextChange: ((value: string | null) => void) | undefined;
 
     function handleTextInput(event: Event) {
         const target = event.target as HTMLInputElement;
-        const newValue = target.value.trim() === '' ? null : target.value;
-        dispatch('inputUpdated', newValue);
+        const raw = target.value;
+        const newValue = raw.trim() === '' ? null : raw;
+        onTextChange?.(newValue);
     }
 </script>
 
-
-<div class="inputWrapper">
+<div class="textInputWrapper">
     <label for={id}>{label}</label>
     <div class="shadowWrapper">
-        <input class:invalid={isInvalid} id={id} value={value} type="text" on:input={handleTextInput} placeholder={!placeholder ? label : placeholder} autocomplete="off">
+        <input
+            id={id}
+            class="textInput"
+            class:invalidTextInput={inputErrorText}
+            type="text"
+            value={value ?? ''}            
+            maxlength={maxChar}
+            on:input={handleTextInput}
+            placeholder={!placeholder ? label : placeholder}
+            autocomplete="off"
+        >
     </div>
+
+    {#if showInputError && inputErrorText}
+        <p class="inputErrorText">{inputErrorText}</p>
+    {/if}
 </div>

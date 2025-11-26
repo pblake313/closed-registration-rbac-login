@@ -7,6 +7,8 @@
     import { adIdUsed } from "../../stores/AdIdStore";
     import { get } from "svelte/store";
     import CertifiedPro from "../../Components/PageComponents/CertifiedPro/CertifiedPro.svelte";
+    import Navigation from "../../Components/Navigation.svelte";
+    import Footer from "../../Components/Footer.svelte";
 
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL
     const metaImage = `${frontendUrl}/Images/MetaData/estimatemeta.png`;
@@ -49,13 +51,11 @@
 
 <slot />
 
+
+<Navigation></Navigation>
 <CertifiedPro estimateHeading={true}></CertifiedPro>
 <ResidentialEstimateForm></ResidentialEstimateForm>
 <Testimonials></Testimonials>
 <div style="height: 150px;"></div>
 
-
-<style>
-
-</style>
-  
+<Footer></Footer>

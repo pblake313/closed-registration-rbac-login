@@ -1,0 +1,15 @@
+.containDashTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dashTopTitle{
+    width: calc(100% - 250px);
+}
+.containDashTopButton{
+    width: 250px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

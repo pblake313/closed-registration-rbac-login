@@ -1,0 +1,20 @@
+.closeButton{
+    border-radius: 5px;
+    padding: 0px;
+    margin: 0px;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    border: none;
+    background-color: transparent;
+}
+.closeButton:hover{
+    background-color: rgba(211, 211, 211, 0.171);
+}
+.wrapCloseIcon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 3px;
+}

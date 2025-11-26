@@ -1,0 +1,32 @@
+.accountItemHeading{
+    display: flex;
+    padding:  5px;
+    margin-top: 10px;
+    gap: 15px;
+    position: sticky;
+    top: 50px;
+    background-color: white;
+}
+.tableHeadText{
+    font-size: 10pt;
+    color: #313131;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+.nameCol {
+    width: calc(20%);
+}
+.emailCol {
+    width: calc(20%);
+
+}
+.permissionCol {
+    width: calc(20%);
+}
+.createdCol {
+    width: calc(20%);
+}
+.rev {
+    text-align: right;
+}

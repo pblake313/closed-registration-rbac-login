@@ -1,7 +1,7 @@
 <script lang="ts">
     import Button from "../UI/Button.svelte";
     import TextInput from "../UI/TextInput.svelte";
-    import Loader from "../UI/Loader.svelte"
+    import Loader from "../UI/Loaders/Loader.svelte"
     import Checkbox from "../UI/Checkbox.svelte";
     import TextArea from "../UI/TextArea.svelte";
     import SelectButton from "../UI/SelectButton.svelte";

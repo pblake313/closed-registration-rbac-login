@@ -1,5 +1,5 @@
 <script>
-    import Loader from "../UI/Loader.svelte";
+    import Loader from "../UI/Loaders/Loader.svelte";
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 

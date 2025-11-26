@@ -1,0 +1,42 @@
+.toggleWrapper {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+
+}
+
+.toggleTrack {
+    width: 48px;
+    height: 24px;
+    background-color: #d0d0d0;
+    border-radius: 12px;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.toggleTrack.on {
+    background-color: #4caf50;
+}
+
+.toggleThumb {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    transition: transform 0.2s ease;
+}
+
+.toggleThumb.thumb-off {
+    transform: translateX(2px);
+}
+
+.toggleThumb.thumb-on {
+    transform: translateX(26px);
+}

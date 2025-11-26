@@ -8,6 +8,8 @@
     import TextGrid from "../../Components/PageComponents/TextGrid/TextGrid.svelte";
     import { navStyle } from "../../stores/NavStore";
     import CertifiedPro from "../../Components/PageComponents/CertifiedPro/CertifiedPro.svelte";
+    import Navigation from "../../Components/Navigation.svelte";
+    import Footer from "../../Components/Footer.svelte";
 
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL
     const metaImage = `${frontendUrl}/Images/MetaData/guttermeta.png`;
@@ -36,6 +38,9 @@
     <meta name="twitter:image" content="{metaImage}" />
 </svelte:head>
 
+
+<Navigation></Navigation>
+
 <SubHero heroText={'Gutter Services'} heroImage={'Images/Gutters/gutterup.jpg'}></SubHero>
 
 
@@ -48,3 +53,5 @@
 <CertifiedPro></CertifiedPro>
 
 <ContactPointer></ContactPointer>
+
+<Footer></Footer>

@@ -8,6 +8,8 @@
     import TextGrid from "../../Components/PageComponents/TextGrid/TextGrid.svelte";
     import { navStyle } from "../../stores/NavStore";
     import CertifiedPro from "../../Components/PageComponents/CertifiedPro/CertifiedPro.svelte";
+    import Navigation from "../../Components/Navigation.svelte";
+    import Footer from "../../Components/Footer.svelte";
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL
     const metaImage = `${frontendUrl}/Images/MetaData/roofingmeta.png`;
     const metaUrl = `${frontendUrl}/roofing`
@@ -35,6 +37,8 @@
     <meta name="twitter:image" content="{metaImage}" />
 </svelte:head>
 
+<Navigation></Navigation>
+
 <SubHero heroText={'Roofing Services'}></SubHero>
 
 <TextGrid subHeading={'Full Roof Replacement'} paragraphText={'We specialize in asphalt shingle roofing for new installations and full roof replacements. We use only high-quality shingles that hold up against Michigan’s seasonal extremes — from heavy snow to summer heat. Our team follows precise installation techniques to ensure a secure, long-lasting roof that not only protects your home but also enhances its appearance.'} heading={'Roofing Services'} gridData={asphaltShingleData}></TextGrid>
@@ -47,4 +51,5 @@
 
 <ContactPointer></ContactPointer>
 
+<Footer></Footer>
 

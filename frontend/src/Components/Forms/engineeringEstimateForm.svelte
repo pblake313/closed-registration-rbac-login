@@ -6,7 +6,7 @@
     import TextArea from "../UI/TextArea.svelte";
     import SelectButton from "../UI/SelectButton.svelte";
     import Button from "../UI/Button.svelte";
-    import Loader from "../UI/Loader.svelte"
+    import Loader from "../UI/Loaders/Loader.svelte"
 
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL

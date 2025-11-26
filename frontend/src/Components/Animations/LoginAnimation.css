@@ -1,0 +1,166 @@
+.stripeHero {
+    position: relative;
+    width: 100%;
+    height: 100%;           /* parent controls actual height */
+    overflow: hidden;
+
+    /* Stripe-ish multi-color band */
+    background: linear-gradient(
+        110deg,
+        #ff7b007a,
+        #aaaaaa,
+        #bbbbbb,
+        rgb(255, 237, 186)
+    );
+    background-size: 320% 320%;
+    animation: stripeGradient 22s ease-in-out infinite;
+    opacity: .4;
+}
+
+/* gradient pan */
+@keyframes stripeGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ========================= */
+/*      WHITE GLOW CIRCLES   */
+/* ========================= */
+
+.heroCircle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), transparent 70%);
+    filter: blur(2.5vw);
+    opacity: 0.7;
+}
+
+/* top-left */
+.heroCircle--1 {
+    width: 22%;
+    height: 90%;
+    top: -10%;
+    left: -5%;
+    animation: floatWhite1 26s ease-in-out infinite;
+}
+
+/* top-right */
+.heroCircle--2 {
+    width: 18%;
+    height: 75%;
+    top: -5%;
+    right: 5%;
+    animation: floatWhite2 28s ease-in-out infinite;
+}
+
+/* bottom-mid */
+.heroCircle--3 {
+    width: 24%;
+    height: 90%;
+    bottom: -15%;
+    left: 35%;
+    animation: floatWhite3 24s ease-in-out infinite;
+}
+
+/* ========================= */
+/*       COLORED BLOBS       */
+/* ========================= */
+
+.shapeCircle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(5vw);
+    opacity: 0.65;
+    mix-blend-mode: screen;
+}
+
+/* warm yellow/orange left */
+.shapeCircle--a {
+    width: 30%;
+    height: 90%;
+    top: -15%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(255,210,130,0.95), transparent 80%);
+    animation: floatColorA 30s ease-in-out infinite;
+}
+
+/* pink/red bottom */
+.shapeCircle--b {
+    width: 35%;
+    height: 95%;
+    bottom: -25%;
+    left: 15%;
+    background: radial-gradient(circle, rgba(255,90,140,0.9), transparent 80%);
+    animation: floatColorB 32s ease-in-out infinite;
+}
+
+/* purple mid/right */
+.shapeCircle--c {
+    width: 32%;
+    height: 90%;
+    top: -10%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(190,130,255,0.95), transparent 80%);
+    animation: floatColorC 34s ease-in-out infinite;
+}
+
+/* cool blue lower-right */
+.shapeCircle--d {
+    width: 30%;
+    height: 90%;
+    bottom: -20%;
+    right: 18%;
+    background: radial-gradient(circle, rgba(120,200,255,0.95), transparent 80%);
+    animation: floatColorD 29s ease-in-out infinite;
+}
+
+/* ========================= */
+/*        FLOAT ANIMATIONS   */
+/* ========================= */
+
+/* whites – smaller movement */
+@keyframes floatWhite1 {
+    0%   { transform: translate(-3%, -2%) scale(1); }
+    50%  { transform: translate(4%, 3%) scale(1.06); }
+    100% { transform: translate(-3%, -2%) scale(1); }
+}
+
+@keyframes floatWhite2 {
+    0%   { transform: translate(2%, -2%) scale(1); }
+    50%  { transform: translate(-4%, 4%) scale(1.07); }
+    100% { transform: translate(2%, -2%) scale(1); }
+}
+
+@keyframes floatWhite3 {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(5%, -6%) scale(1.05); }
+    100% { transform: translate(0,0) scale(1); }
+}
+
+/* colors – a bit more dramatic */
+@keyframes floatColorA {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(8%, 4%) scale(1.08); }
+    100% { transform: translate(0,0) scale(1); }
+}
+
+@keyframes floatColorB {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(-6%, -5%) scale(1.1); }
+    100% { transform: translate(0,0) scale(1); }
+}
+
+@keyframes floatColorC {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(-7%, 6%) scale(1.08); }
+    100% { transform: translate(0,0) scale(1); }
+}
+
+@keyframes floatColorD {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(6%, -4%) scale(1.07); }
+    100% { transform: translate(0,0) scale(1); }
+}

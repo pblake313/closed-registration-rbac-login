@@ -4,12 +4,13 @@
     import Hero from "../Components/PageComponents/Hero/Hero.svelte";
     import Outsidelinks from "../Components/PageComponents/OutsideLinks/Outsidelinks.svelte";
     import ResidentialServicesGrid from "../Components/PageComponents/Servicesgrid/ResidentialServicesGrid.svelte";
-      import ProjectsSwiper from "../Components/PageComponents/Swipers/ImageSwiper.svelte";
     import Testimonials from "../Components/PageComponents/Testimonials/Testimonials.svelte";
     import { navStyle } from "../stores/NavStore";
     import ImageLeftSection from "../Components/PageComponents/AboutPointer/ImageLeftSection.svelte";
     import { homePageSlider } from "$lib/ImageSwiperData";
     import ImageSwiper from "../Components/PageComponents/Swipers/ImageSwiper.svelte";
+    import Navigation from "../Components/Navigation.svelte";
+    import Footer from "../Components/Footer.svelte";
 
     
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL
@@ -41,6 +42,7 @@
 </svelte:head>
 
 
+<Navigation></Navigation>
 
 <Hero></Hero>
 
@@ -56,3 +58,4 @@
 
 <ContactPointer></ContactPointer>
 
+<Footer></Footer>

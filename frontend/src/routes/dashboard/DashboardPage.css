@@ -1,0 +1,40 @@
+.dashboardFlex {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.dashNavigation{
+    border: none;
+    width: calc(250px - 21px);
+    padding: 10px;
+    border-right: 1px solid rgba(211, 211, 211, 0.397);
+    min-height: calc(100vh - 20px);
+    position: fixed;
+    top: 0px;
+}
+.dashMainContent{
+    width: calc(100% - 251px);
+}
+.containMainJoint{
+    max-width: 1200px;
+    margin: auto;
+}
+.mainJointBar{
+    padding: 10px 0px;
+    background-color: white;
+    position: sticky;
+    top: 0px;
+}
+.insideJointBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.breadCrumbSide{
+    width: calc(100% - 250px);
+}
+.moreActionSide{
+    width: 250px;
+    display: flex;
+    flex-direction: row-reverse;
+}

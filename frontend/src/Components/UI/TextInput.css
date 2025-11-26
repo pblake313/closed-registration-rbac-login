@@ -1,5 +1,4 @@
-.inputWrapper {
-    margin-bottom: 20px;
+.textInputWrapper {
     position: relative;
 }
 .shadowWrapper {
@@ -7,23 +6,22 @@
     width: calc(100%);
 }
 
-input {
+.textInput {
     padding: 10px;
     outline: none;
     border: 1px solid lightgray;
     width: calc(100% - 24px);
     border-radius: 5px;
     color: rgb(111, 111, 111);
-    transition: 0.5s;
-
-
+    transition: 0.3s;
 }
 
-input:focus {
-    border: 1px solid #FF7B00;
+.textInput:focus {
+    border: 1px solid #3c3c3c;
+    box-shadow: 0px 0px 2px #3c3c3c;
 
 }
-input::placeholder {
+.textInput::placeholder {
     color: rgb(174, 174, 174);
 }
 label {
@@ -35,23 +33,29 @@ label {
 
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
+.textInput:-webkit-autofill,
+.textInput:-webkit-autofill:hover, 
+.textInput:-webkit-autofill:focus, 
+.textInput:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 40px rgb(255, 255, 255) inset !important;
     -webkit-text-fill-color: rgb(111, 111, 111) !important;
-    border-color: white;
     /* keep box shadow the same */
-    -webkit-box-shadow:  0px 0px 5px rgba(76, 76, 76, 0.278);
-}
-
-input:-webkit-autofill:focus {
-    border-color: #FF7B00;
+    -webkit-box-shadow:  0px 0px 2px #3c3c3c;
+    border: 1px solid lightgray;
 
 }
-.invalid {
+
+.textInput:-webkit-autofill:focus {
+   border: 1px solid #3c3c3c;
+    box-shadow: 0px 0px 2px #3c3c3c;
+}
+.invalidTextInput {
     border: 1px solid red;
-    background-color: rgba(255, 0, 0, 0.096);
+    box-shadow: 0px 0px 2px #ff0000;
     transition: .3s;
+}
+.inputErrorText{
+    font-size: 10pt;
+    color: red;
+
 }

@@ -1,14 +1,8 @@
-.inputWrapper {
-    margin-bottom: 20px;
+.emailInputWrapper {
     position: relative;
 }
-.shadowWrapper {
-    box-shadow: 0px 0px 5px rgba(76, 76, 76, 0.278);
-    border-radius: 5px; /* Match input border-radius */
-    width: calc(100%);
-}
 
-input {
+.emailInput {
     padding: 10px;
     outline: none;
     border: 2px solid transparent;
@@ -16,14 +10,16 @@ input {
     border-radius: 5px;
     color: rgb(111, 111, 111);
     transition: 0.5s;
+    border: 1px solid lightgray;
 
 }
 
-input:focus {
-    border: 2px solid #FF7B00;
+.emailInput:focus {
+   border: 1px solid #3c3c3c;
+    box-shadow: 0px 0px 2px #3c3c3c;
 
 }
-input::placeholder {
+.emailInput::placeholder {
     color: rgb(174, 174, 174);
 }
 label {
@@ -35,10 +31,10 @@ label {
 
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
+.emailInput:-webkit-autofill,
+.emailInput:-webkit-autofill:hover, 
+.emailInput:-webkit-autofill:focus, 
+.emailInput:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 40px rgb(255, 255, 255) inset !important;
     -webkit-text-fill-color: rgb(111, 111, 111) !important;
     border-color: white;
@@ -46,12 +42,17 @@ input:-webkit-autofill:active{
     -webkit-box-shadow:  0px 0px 5px rgba(76, 76, 76, 0.278);
 }
 
-input:-webkit-autofill:focus {
+.emailInput:-webkit-autofill:focus {
     border-color: #FF7B00;
 
 }
-.invalid {
-    border: 2px solid red;
-    background-color: rgba(255, 0, 0, 0.096);
+.invalidEmailInput {
+    border: 1px solid red;
+    box-shadow: 0px 0px 2px #ff0000;
     transition: .3s;
+}
+
+.inputErrorText{
+    font-size: 10pt;
+    color: red;
 }

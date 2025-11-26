@@ -1,0 +1,28 @@
+.userAccountListItem {
+    display: flex;
+    border-top: 1px solid rgba(211, 211, 211, 0.432);
+    padding: 0 5px;
+    transition: .3s;
+    gap: 15px;
+    text-decoration: none; /* optional */
+}
+
+.userAccountListItem:hover {
+    background-color: rgba(211, 211, 211, 0.185);
+}
+
+.col {
+    flex: 1;        /* or flex: 0 0 20%; if you want strict 20% */
+    min-width: 0;   /* 🔑 allow flex item to shrink so ellipsis can kick in */
+}
+
+/* Apply ellipsis to the actual text element */
+.col p {
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.rev {
+    text-align: right;
+}

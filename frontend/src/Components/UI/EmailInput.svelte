@@ -1,43 +1,72 @@
 <script lang="ts">
-    import './TextInput.css';
-    import { createEventDispatcher } from 'svelte';
+    import './EmailInput.css';
 
     export let label: string | null = null;
     export let value: string | null = null;
     export let id: string | null = null;
     export let placeholder: string | null = null;
-    export let isInvalid: boolean = false;
+    export let showInputError: boolean = true;
+    export let inputErrorText: string | null = null;
 
-    const dispatch = createEventDispatcher();
+    // Svelte 5-style callback prop
+    export let onEmailChange: ((value: string | null) => void) | undefined;
 
+    // Sanitize on input (after the character is entered)
     function handleEmailInput(event: Event) {
         const target = event.target as HTMLInputElement;
-        const cleanedValue = target.value.replace(/\s/g, '');
-        target.value = cleanedValue;
-        const newValue = cleanedValue.trim() === '' ? null : cleanedValue;
-        dispatch('inputUpdated', newValue);
+
+        // Lowercase everything
+        let v = target.value.toLowerCase();
+
+        // Only allow email-safe characters
+        v = v.replace(/[^a-z0-9@._+-]/g, '');
+
+        // Remove spaces just in case
+        v = v.replace(/\s/g, '');
+
+        target.value = v;
+
+        const newValue = v.trim() === '' ? null : v;
+        onEmailChange?.(newValue);
     }
 
-    function preventSpace(event: KeyboardEvent) {
+    // Block invalid characters before they enter the field
+    function preventInvalidKeys(event: KeyboardEvent) {
+        const allowed = /^[a-z0-9@._+-]$/;
+
+        // Always allow:
+        if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+            return;
+        }
+
+        // Block spaces
         if (event.key === ' ') {
+            event.preventDefault();
+            return;
+        }
+
+        // Block any character not in allowed list
+        if (!allowed.test(event.key.toLowerCase())) {
             event.preventDefault();
         }
     }
 </script>
 
-<div class="inputWrapper">
+<div class="emailInputWrapper">
     <label for={id}>{label}</label>
-    <div class="shadowWrapper">
-        <input
-            class:invalid={isInvalid}
-            id={id}
-            value={value}
-            type="email"
-            on:input={handleEmailInput}
-            on:keydown={preventSpace}
-            placeholder={!placeholder ? label : placeholder}
-            autocomplete="off"
-            spellcheck="false"
-        >
-    </div>
+
+    <input
+        class="emailInput"
+        class:invalidEmailInput={inputErrorText}
+        id={id}
+        value={value ?? ''}
+        type="text"
+        on:input={handleEmailInput}
+        on:keydown={preventInvalidKeys}
+        placeholder={!placeholder ? label : placeholder}
+    >
+
+    {#if showInputError && inputErrorText}
+        <p class="inputErrorText">{inputErrorText}</p>
+    {/if}
 </div>
