@@ -1,34 +1,21 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.HttpResults;
 using SAConstruction.DTO;
 using SAConstruction.Helpers;
+using SAConstruction.Repositories;
 
 namespace SAConstruction.Services
 {
     public class CreateUserService
     {
-        private readonly DataContextDapper _dapper;
+        private readonly UserRepository _userRepo;
 
         public CreateUserService(IConfiguration config)
         {
-            _dapper = new DataContextDapper(config);
+            _userRepo = new UserRepository(config);
         }
 
         // helper to get a user by email
-        public UserDto? GetUserByEmail(string email)
-        {
-            const string sql = @"
-                SELECT TOP 1 
-                    FirstName,
-                    LastName,
-                    Email
-                FROM Users.AccountData
-                WHERE Email = @Email;
-            ";
-
-            // LoadData returns IEnumerable<T>, so just grab FirstOrDefault
-            var users = _dapper.LoadData<UserDto>(sql, new { Email = email });
-
-            return users.FirstOrDefault();
-        }
 
         public object CreateUser(CreateUserRequest req)
         {
@@ -42,17 +29,20 @@ namespace SAConstruction.Services
             }
 
             // 🔥 use DataContextDapper here to see if the user already exists
-            var existingUser = GetUserByEmail(req.Email);
+            var existingUser = _userRepo.GetUserByEmail(req.Email);
+
+
+
 
             if (existingUser != null)
             {
                 throw new Exception("A user with that email already exists.");
-            } else
-            {
-                throw new Exception("No user yet...");
-                
-            }
+            } 
+            
 
+            var createdUser = _userRepo.CreateUser(req);
+
+            return createdUser;
 
 
         }

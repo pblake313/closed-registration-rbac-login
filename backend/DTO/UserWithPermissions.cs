@@ -1,6 +1,6 @@
 namespace SAConstruction.DTO
 {
-    public class UserDto
+    public class UserWithPermissionsDto
     {
         public int UserId { get; set; }
 
@@ -12,5 +12,9 @@ namespace SAConstruction.DTO
 
         public DateTime? DateCreated { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public bool JobPostings {get; set;}
+        public bool AccountManagement {get; set;}
+        public bool ViewCandidates {get; set;}
     }
 }

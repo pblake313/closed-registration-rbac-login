@@ -27,16 +27,17 @@
 ></DashTop>
 
 
+{#if $allUserFetchError}
+    <FormError centerAlign={true} errorTitle={'Fetch Accounts Error'} errorMessage={$allUserFetchError}></FormError>
+{/if}
+
+
 {#if !$isFetchingAllAccounts}
 
-    {#if $allUserFetchError}
-        <FormError centerAlign={true} errorTitle={'Fetch Accounts Error'} errorMessage={$allUserFetchError}></FormError>
-    {:else}
-
-        {#if $allUserAccounts.length < 0}
+        {#if $allUserAccounts.length <= 0}
             <p>No Accounts</p>
         {:else}
-
+            <p>Have {$allUserAccounts.length} Accounts</p>
             <AccountItemsHeader></AccountItemsHeader>
             {#each $allUserAccounts as user}
                 <AccountItem {user}></AccountItem>
@@ -45,7 +46,6 @@
 
         {/if}
 
-    {/if}
 {:else}
     <Loader></Loader>
 {/if}

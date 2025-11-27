@@ -1,5 +1,5 @@
 import type { User } from "$lib/types/User";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { adminFetch } from "../../fetchers/AdminFetch";
 
 export const hasFetchedAllAccounts = writable<boolean>(false)
@@ -12,6 +12,10 @@ export async function fetchAllAccounts() {
     // if we have fetched accounts, then just return...
 
     try {
+        if (get(hasFetchedAllAccounts)) {
+            return;
+        }
+
         isFetchingAllAccounts.set(true)
 
         const response = await adminFetch('/Admin/Get-Users', {
