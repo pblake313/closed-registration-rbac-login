@@ -24,7 +24,9 @@ BEGIN
         LastName NVARCHAR(100) NULL,
         PasswordHash NVARCHAR(255) NULL,
         DateCreated DATETIME2 NOT NULL CONSTRAINT DF_AccountData_DateCreated DEFAULT SYSUTCDATETIME(),
-        UpdatedAt  DATETIME2 NOT NULL CONSTRAINT DF_AccountData_UpdatedAt  DEFAULT SYSUTCDATETIME()
+        UpdatedAt  DATETIME2 NOT NULL CONSTRAINT DF_AccountData_UpdatedAt  DEFAULT SYSUTCDATETIME(),
+        LastPasswordResetEmailSentAt DATETIME2 NULL,
+        LastLogin DATETIME2 NULL
     );
 END
 GO
@@ -41,6 +43,36 @@ BEGIN
             REFERENCES Users.AccountData(UserId)
             ON DELETE CASCADE
     );
+END
+GO
+
+-- Password reset docs table
+IF OBJECT_ID('Users.PasswordResetDocs', 'U') IS NULL
+BEGIN
+    CREATE TABLE Users.PasswordResetDocs (
+        -- Who the reset is for
+        UserId INT NOT NULL,
+
+        -- When the reset was requested
+        DateCreated DATETIME2 NOT NULL
+            CONSTRAINT DF_PasswordResetDocs_DateCreated DEFAULT SYSUTCDATETIME(),
+
+        -- When the reset link expires (set from code)
+        ExpiresAt DATETIME2 NOT NULL,
+
+        -- Token used in the reset link
+        ReferenceId NVARCHAR(100) NOT NULL,
+
+        CONSTRAINT PK_PasswordResetDocs PRIMARY KEY (ReferenceId),
+
+        CONSTRAINT FK_PasswordResetDocs_AccountData_UserId
+            FOREIGN KEY (UserId)
+            REFERENCES Users.AccountData(UserId)
+            ON DELETE CASCADE
+    );
+
+    CREATE NONCLUSTERED INDEX IX_PasswordResetDocs_UserId
+        ON Users.PasswordResetDocs (UserId);
 END
 GO
 

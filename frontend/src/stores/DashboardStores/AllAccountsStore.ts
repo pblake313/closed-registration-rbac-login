@@ -22,6 +22,8 @@ export async function fetchAllAccounts() {
             method: 'GET'
         })
 
+        console.log(response)
+
         for (let index = 0; index < response.length; index++) {
             const user = response[index];
             let userObj: User = {
@@ -52,22 +54,27 @@ export async function fetchAllAccounts() {
     
 }
 
-
 export function upsertUserIntoAllUserAccounts(user: User) {
     allUserAccounts.update((current) => {
         const index = current.findIndex((u) => u.userId === user.userId);
 
+        let updated: User[];
+
         if (index === -1) {
-            // user not found → insert
-            return [...current, user];
+            // insert
+            updated = [...current, user];
+        } else {
+            // update
+            updated = [...current];
+            updated[index] = { ...current[index], ...user };
         }
 
-        // user found → update
-        const updated = [...current];
-        updated[index] = {
-            ...current[index],
-            ...user
-        };
+        // 🔥 Sort by userId (newest first)
+        updated.sort((a, b) => {
+            const idA = a.userId ?? 0;
+            const idB = b.userId ?? 0;
+            return idB - idA;
+        });
 
         return updated;
     });

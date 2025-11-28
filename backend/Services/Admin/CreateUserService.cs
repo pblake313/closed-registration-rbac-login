@@ -32,8 +32,6 @@ namespace SAConstruction.Services
             var existingUser = _userRepo.GetUserByEmail(req.Email);
 
 
-
-
             if (existingUser != null)
             {
                 throw new Exception("A user with that email already exists.");

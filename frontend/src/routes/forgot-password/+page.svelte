@@ -1,11 +1,10 @@
 <script lang="ts">
     import LoginAnimation from "../../Components/Animations/LoginAnimation.svelte";
     import Footer from "../../Components/Footer.svelte";
-    import LoginForm from "../../Components/Forms/Auth/LoginForm.svelte";
+    import ForgotPasswordForm from "../../Components/Forms/Auth/ForgotPasswordForm.svelte";
     import Navigation from "../../Components/Navigation.svelte";
     import { navStyle } from "../../stores/NavStore";
-    import './LoginPageStyles.css'
-
+    import './ForgotPageStyles.css'
 
     navStyle.set({class: 'bright'})
 
@@ -16,7 +15,6 @@
 <div class="wrapTheLoginPage">
 
 
-
     <div class="loginFormBack">
         <LoginAnimation></LoginAnimation>
     </div>
@@ -25,15 +23,12 @@
 
     <div class="formSpacer"></div>
     <div class="containLoginForm">
-        <LoginForm></LoginForm>
+        <ForgotPasswordForm></ForgotPasswordForm>
     </div>
-    <div class="containMoreLinks">
-        <a href="/forgot-password">Forgot Password?</a>
-    </div>
+    
     <div class="formSpacer"></div>
     <div class="backLines rightb"></div>
 
-    
 </div>
 
 <Footer></Footer>

@@ -70,14 +70,15 @@
             });
 
             console.log(response)
+            const nowIso = new Date().toISOString();
 
            let userObj: User = {
                 userId: response.userId,
                 Email: response.email,
                 FirstName: response.firstName,
                 LastName: response.lastName,
-                UpdatedAt: response.updatedAt,
-                DateCreated: response.dateCreated,
+                UpdatedAt: response.updatedAt ?? nowIso,
+                DateCreated: response.dateCreated ?? nowIso,
                 permissions: {
                     JobPostings: response.jobPostings,
                     AccountManagement: response.accountManagement,

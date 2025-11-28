@@ -39,30 +39,29 @@
 
 
 
-  <form on:submit={test}>
-        <h3 style="font-size: 20pt; text-align: center;">Login</h3>
-        <br>
+<form on:submit={test}>
+    <h3 style="font-size: 20pt; text-align: center;">Login</h3>
+    <br>
 
 
-        {#if !isLoggingIn}
-        
-            <div style="margin-bottom: 20px;">
-                <EmailInput onEmailChange={(v) => {console.log(v)}} label={'Email'}></EmailInput>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <TextInput onTextChange={(v) => {console.log(v)}} label={'Password'}></TextInput>
-            </div>
-            <Button fullWidth={true}>Login</Button>
+    {#if !isLoggingIn}
+    
+        <div style="margin-bottom: 20px;">
+            <EmailInput onEmailChange={(v) => {console.log(v)}} label={'Email'}></EmailInput>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <TextInput onTextChange={(v) => {console.log(v)}} label={'Password'}></TextInput>
+        </div>
+        <Button fullWidth={true}>Login</Button>
 
-      
-        {:else}
-            <Loader></Loader>
-        {/if}
+    {:else}
+        <Loader></Loader>
+    {/if}
 
-      {#if errorMessage}
-            <br><br>
-            <FormError centerAlign={true} errorTitle={'Login Error'} errorMessage={errorMessage}></FormError>
-        {/if}
-    </form>
+    {#if errorMessage}
+        <br><br>
+        <FormError centerAlign={true} errorTitle={'Login Error'} errorMessage={errorMessage}></FormError>
+    {/if}
+</form>
 
 

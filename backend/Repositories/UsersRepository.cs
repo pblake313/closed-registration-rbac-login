@@ -1,10 +1,9 @@
-using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Dapper;              // <--- important for Dapper extension methods
+using SAConstruction.Models;
 using SAConstruction.DTO;
-using SAConstruction.Helpers;
-using Microsoft.Extensions.Configuration;
+using BCrypt.Net;
 
 namespace SAConstruction.Repositories
 {
@@ -20,7 +19,7 @@ namespace SAConstruction.Repositories
                 ?? throw new Exception("Connection string 'sql-connection-string' is missing.");
         }
 
-        public UserDto? GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
             const string sql = @"
                 SELECT TOP 1 
@@ -30,16 +29,18 @@ namespace SAConstruction.Repositories
                     LastName,
                     PasswordHash,
                     DateCreated,
-                    UpdatedAt
+                    UpdatedAt,
+                    LastPasswordResetEmailSentAt,
+                    LastLogin
                 FROM Users.AccountData
                 WHERE Email = @Email;
             ";
 
-            var users = _dapper.LoadData<UserDto>(sql, new { Email = email });
+            var users = _dapper.LoadData<User>(sql, new { Email = email });
             return users.FirstOrDefault();
         }
 
-        public UserWithPermissionsDto GetUserWithPermissionsById(int userId)
+        public UserWithPermissions GetUserWithPermissionsById(int userId)
         {
             const string sql = @"
                 SELECT 
@@ -50,6 +51,7 @@ namespace SAConstruction.Repositories
                     u.PasswordHash,
                     u.DateCreated,
                     u.UpdatedAt,
+                    u.LastPasswordResetEmailSentAt,
                     COALESCE(p.JobPostings, 0)         AS JobPostings,
                     COALESCE(p.AccountManagement, 0)   AS AccountManagement,
                     COALESCE(p.ViewCandidates, 0)      AS ViewCandidates
@@ -59,7 +61,7 @@ namespace SAConstruction.Repositories
                 WHERE u.UserId = @UserId;
             ";
 
-            var results = _dapper.LoadData<UserWithPermissionsDto>(
+            var results = _dapper.LoadData<UserWithPermissions>(
                 sql,
                 new { UserId = userId }
             );
@@ -71,7 +73,7 @@ namespace SAConstruction.Repositories
             return user;
         }
 
-        public UserWithPermissionsDto CreateUser(CreateUserRequest request)
+        public UserWithPermissions CreateUser(CreateUserRequest request)
         {
             // generate random password
             string randomPassword = GenerateRandomPassword(10);
@@ -122,7 +124,7 @@ namespace SAConstruction.Repositories
 
                 tran.Commit();
 
-                return new UserWithPermissionsDto
+                return new UserWithPermissions
                 {
                     UserId = newUserId,
                     Email = request.Email,
@@ -140,6 +142,77 @@ namespace SAConstruction.Repositories
             {
                 tran.Rollback();
                 throw;
+            }
+        }
+
+        public UserWithPermissions[] GetAllUsersWithPermissions()
+        {
+            const string sql = @"
+                SELECT 
+                    u.UserId,
+                    u.Email,
+                    u.FirstName,
+                    u.LastName,
+                    u.PasswordHash,
+                    u.DateCreated,
+                    u.UpdatedAt,
+                    u.LastPasswordResetEmailSentAt,
+                    u.LastLogin,
+                    COALESCE(p.JobPostings, 0)       AS JobPostings,
+                    COALESCE(p.AccountManagement, 0) AS AccountManagement,
+                    COALESCE(p.ViewCandidates, 0)    AS ViewCandidates
+                FROM Users.AccountData AS u
+                LEFT JOIN Users.UserPermissions AS p
+                    ON u.UserId = p.UserId
+                ORDER BY u.UserId;
+            ";
+
+            var results = _dapper.LoadData<UserWithPermissions>(sql);
+
+            // if you prefer an array:
+            return results.ToArray();
+        }
+
+        public void UpdateLastResetTime(string refId)
+        {
+            const string sql = @"
+                UPDATE Users.AccountData
+                SET LastPasswordResetEmailSentAt = SYSUTCDATETIME()
+                WHERE UserId = (
+                    SELECT UserId 
+                    FROM Users.PasswordResetDocs
+                    WHERE ReferenceId = @RefId
+                );
+            ";
+
+            bool updated = _dapper.ExecuteSql(sql, new { RefId = refId });
+
+            if (!updated)
+                throw new Exception("Could not update last password reset time — invalid reference ID.");
+        }
+
+
+        public void UpdateUserPassword(string password, int userId)
+        {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            const string sql = @"
+                UPDATE Users.AccountData
+                SET PasswordHash = @PasswordHash,
+                    UpdatedAt = SYSUTCDATETIME(),
+                    LastPasswordResetEmailSentAt = NULL
+                WHERE UserId = @UserId;
+            ";
+
+            bool updated = _dapper.ExecuteSql(sql, new
+            {
+                PasswordHash = hashedPassword,
+                UserId = userId
+            });
+
+            if (!updated)
+            {
+                throw new Exception("Could not update user password.");
             }
         }
 

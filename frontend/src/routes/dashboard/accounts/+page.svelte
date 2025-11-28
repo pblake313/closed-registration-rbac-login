@@ -18,7 +18,6 @@
     })
 
 </script>
-<!--  -->
 
 <DashTop  
     dashHeading={'Accounts'}
@@ -37,7 +36,6 @@
         {#if $allUserAccounts.length <= 0}
             <p>No Accounts</p>
         {:else}
-            <p>Have {$allUserAccounts.length} Accounts</p>
             <AccountItemsHeader></AccountItemsHeader>
             {#each $allUserAccounts as user}
                 <AccountItem {user}></AccountItem>

@@ -8,11 +8,14 @@ namespace SAConstruction.Controllers
     [Route("[controller]")]
     public class AdminController : ControllerBase
     {
-        private readonly CreateUserService _userService;
+        private readonly CreateUserService _createUserService;
+
+        private readonly GetUsersService _getUsersService;
 
         public AdminController(IConfiguration config)
         {
-            _userService = new CreateUserService(config);
+            _createUserService = new CreateUserService(config);
+            _getUsersService = new GetUsersService(config);
         }
 
         [HttpPost("Create-User")]
@@ -20,7 +23,7 @@ namespace SAConstruction.Controllers
         {
             try
             {
-                var result = _userService.CreateUser(req);
+                var result = _createUserService.CreateUser(req);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -32,7 +35,15 @@ namespace SAConstruction.Controllers
         [HttpGet("Get-Users")]
         public IActionResult GetUsers()
         {
-            return Ok("TODO: Get more users...");
+            try
+            {
+                var result = _getUsersService.GetUsers();
+                return Ok(result);
+            } catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
     }
 }
