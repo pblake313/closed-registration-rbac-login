@@ -1,4 +1,10 @@
+
+using SAConstruction.Middleware; 
+
 var builder = WebApplication.CreateBuilder(args);
+
+// REGISTER YOUR MIDDLEWARE FILTER
+builder.Services.AddScoped<AdminMiddleware>(); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -13,7 +19,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("DefaultCors", corsBuilder =>
     {
         corsBuilder
-            .WithOrigins("http://localhost:5173") 
+            .WithOrigins("http://localhost:5173")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -29,7 +35,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseHttpsRedirection(); // this just forces the app to use https
+    app.UseHttpsRedirection(); // forces https
 }
 
 app.UseCors("DefaultCors");

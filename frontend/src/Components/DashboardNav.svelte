@@ -3,8 +3,6 @@
     import MainLogo from './SVG/MainLogo.svelte';
     import { page } from '$app/stores';
 
-    // (Optional) Debug – this will log every time the route changes
-    $: console.log('current path:', $page.url.pathname);
 </script>
 
 <a href="/" class="containHomeNav">

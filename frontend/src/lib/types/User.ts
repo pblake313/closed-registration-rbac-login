@@ -1,10 +1,12 @@
 export interface User {
-    userId: number;
+    UserId: number;
     Email: string | null;
     FirstName: string | null;
     LastName: string | null;
     DateCreated: string | null;
     UpdatedAt: string | null;
+    LastPasswordResetEmailSentAt: string | null,
+
     permissions: {
         JobPostings: boolean;
         AccountManagement: boolean;

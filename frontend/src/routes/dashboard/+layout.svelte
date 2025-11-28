@@ -1,37 +1,49 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import BreadCrumbs from '../../Components/DashboardComponents/BreadCrumbs.svelte';
 import DashboardNav from '../../Components/DashboardNav.svelte';
+    import { authenticatedUser } from '../../stores/UserStore';
     import './DashboardPage.css'
+        import { browser } from '$app/environment';
+
+    $: if (browser && $authenticatedUser === null) {
+        goto('/login');
+    }
 </script>
 
 
-<div class="dashboardFlex">
+{#if $authenticatedUser}
+    <div class="dashboardFlex">
 
-    <div class="dashNavigation">
-        <DashboardNav></DashboardNav>
-    </div>
-    <div></div>
+        <div class="dashNavigation">
+            <DashboardNav></DashboardNav>
+        </div>
+        <div></div>
 
-    <div class="dashMainContent">
-  
+        <div class="dashMainContent">
+    
 
-        <div class="containMainJoint">
-            <div class="mainJointBar">
-                <div class="insideJointBar">
-                    
-                    <div class="breadCrumbSide">
-                        <BreadCrumbs></BreadCrumbs>
-                    </div>
-                    
-                    <div class="moreActionSide">
-                        <p>Logout etc...</p>
+            <div class="containMainJoint">
+                <div class="mainJointBar">
+                    <div class="insideJointBar">
+                        
+                        <div class="breadCrumbSide">
+                            <BreadCrumbs></BreadCrumbs>
+                        </div>
+                        
+                        <div class="moreActionSide">
+                            <p>Logout etc...</p>
+                        </div>
                     </div>
                 </div>
+
+                <slot />
+                    
+
             </div>
-
-            <slot />
-
         </div>
     </div>
-</div>
+
+{/if}
+
 
