@@ -80,6 +80,7 @@
                 UpdatedAt: response.updatedAt ?? nowIso,
                 DateCreated: response.dateCreated ?? nowIso,
                 LastPasswordResetEmailSentAt: response.lastPasswordResetEmailSentAt,
+                LastLogin: response.lastLogin,
                 permissions: {
                     JobPostings: response.jobPostings,
                     AccountManagement: response.accountManagement,

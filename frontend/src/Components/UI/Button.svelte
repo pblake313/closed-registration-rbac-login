@@ -9,6 +9,7 @@
     export let fullWidth: boolean = false;
     export let usePadding: boolean = true;
     export let shaking: boolean = false; // 🔥 new
+    export let disabled: boolean = false
 </script>
 
 <button
@@ -16,6 +17,7 @@
     class:fuller={fullWidth}
     class:noPad={!usePadding}
     class:shake={shaking}  
+    disabled={disabled}
     on:click
 >
     <div class="flexInsideButton">

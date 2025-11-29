@@ -5,6 +5,7 @@
 
 .saButton {
     border-radius: 4px;
+    transition: .4s;
 }
 .primary {
     background-color: #FF7B00;
@@ -105,4 +106,8 @@
     60%  { transform: translateX(-4px); }
     80%  { transform: translateX(4px); }
     100% { transform: translateX(0); }
+}
+
+.saButton:disabled {
+    opacity: .3;
 }

@@ -67,6 +67,7 @@
                         LastName: authUser.lastName,
                         DateCreated: authUser.dateCreated,
                         UpdatedAt: authUser.updatedeAt,
+                        LastLogin: authUser.lastLogin,
                         LastPasswordResetEmailSentAt: authUser.lastPasswordResetEmailSentAt,
                         permissions: {
                             JobPostings: authUser.jobPostings,

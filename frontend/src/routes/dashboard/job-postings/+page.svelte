@@ -47,7 +47,6 @@
     {#if loading}
         <Loader></Loader>
     {:else}
-
         <Button on:click={testCandidates}>Test Job Postings</Button>
     {/if}
 
