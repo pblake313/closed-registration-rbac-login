@@ -31,7 +31,12 @@
     <div class="containLoginForm">
         <ForgotPasswordForm></ForgotPasswordForm>
     </div>
-    
+
+    <br>
+    <div style="margin: auto; width: fit-content;">
+        <a style="text-align: center; margin:auto;" href="/login">Login</a>
+    </div>
+
     <div class="formSpacer"></div>
     <div class="backLines rightb"></div>
 

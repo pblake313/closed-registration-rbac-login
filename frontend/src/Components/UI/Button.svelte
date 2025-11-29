@@ -28,7 +28,7 @@
                     </div>
                 {:else if icon === 'logout'}
                     <div class="singleIconWrapper"  style="margin-top: 2px;">
-                        <LogoutIcon color={'#fff'} height={'15px'}></LogoutIcon>
+                        <LogoutIcon color={iconColor} height={'15px'}></LogoutIcon>
                     </div>
                 {/if}
             </div>

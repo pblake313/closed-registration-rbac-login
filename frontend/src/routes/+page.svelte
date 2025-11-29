@@ -11,7 +11,6 @@
     import ImageSwiper from "../Components/PageComponents/Swipers/ImageSwiper.svelte";
     import Navigation from "../Components/Navigation.svelte";
     import Footer from "../Components/Footer.svelte";
-    import { accessToken as accessTokenStore } from "../stores/TokenStore";
 
     
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL

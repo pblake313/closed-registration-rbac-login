@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
+using SAConstruction.Exceptions;
 using SAConstruction.Repositories;
 using SAConstruction.Services;
 
@@ -33,6 +34,7 @@ namespace SAConstruction.Middleware
             if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
                 accessToken = authHeader["Bearer ".Length..].Trim();
+
             }
 
             // ===== REFRESH TOKEN =====
@@ -56,7 +58,17 @@ namespace SAConstruction.Middleware
                     ClockSkew = TimeSpan.Zero
                 };
 
+
+                // simply help me throw an error here if its null or we dont have one...
+
+                if (string.IsNullOrWhiteSpace(accessToken))
+                {
+                    throw new SecurityTokenExpiredException("Access token is missing.");
+                }
+
+
                 var principal = tokenHandler.ValidateToken(accessToken, validationParams, out var validatedToken);
+
 
 
                 // get the userId from the token payload.
@@ -85,6 +97,7 @@ namespace SAConstruction.Middleware
                 {
                     Console.WriteLine("🟣 Attempting Refresh.");
 
+
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var refreshSecret = _config["jwtRefreshSecret"] ?? throw new Exception("Missing jwtRefreshSecret");
                     var refreshKey = Encoding.UTF8.GetBytes(refreshSecret);
@@ -98,6 +111,13 @@ namespace SAConstruction.Middleware
                         ValidateLifetime = true,    // 🔥 refresh token also has exp
                         ClockSkew = TimeSpan.Zero
                     };
+
+
+                    // help me handle an error here if i am missing a refresh token...
+                    if (string.IsNullOrWhiteSpace(refreshToken))
+                    {
+                        throw new MissingTokenException("Refresh token is missing.");
+                    }
 
                     var refreshPrincipal = tokenHandler.ValidateToken(refreshToken, refreshValidationParams, out var refreshValidatedToken);
 
@@ -135,6 +155,13 @@ namespace SAConstruction.Middleware
                     http.Items["userRequestingAccess"] = userToSendDown;
 
                 }
+                catch (MissingTokenException refreshExecption)
+                {
+                    context.Result = new BadRequestObjectResult(new
+                    {
+                        message = refreshExecption.Message,
+                    });
+                }
                 catch (Exception refreshExecption)
                 {
                     Console.WriteLine("⛔ Invalid or expired access token.");
@@ -153,6 +180,14 @@ namespace SAConstruction.Middleware
                 {
                     message = ex.Message,
                     forceLogout = true
+                });
+            }
+            catch (MissingTokenException ex)
+            {
+                // just say ok...
+                context.Result = new BadRequestObjectResult(new
+                {
+                    message = ex.Message,
                 });
             }
             catch (Exception ex)

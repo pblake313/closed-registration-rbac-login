@@ -34,7 +34,7 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
                         </div>
                         
                         <div class="moreActionSide">
-                            <Button on:click={logout} icon={'logout'} usePadding={false} buttonClass={'stayDark'}>Logout</Button>
+                            <Button iconColor={'#000'} on:click={logout} icon={'logout'} usePadding={false} buttonClass={'stayWhite'}>Logout</Button>
                         </div>
                     </div>
                 </div>

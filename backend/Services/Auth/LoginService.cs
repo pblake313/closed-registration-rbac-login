@@ -18,9 +18,6 @@ public class LoginService
 
     public LoginResponse Login(LoginRequest req)
     {
-        Console.WriteLine(req.Email);
-        Console.WriteLine(req.Password);
-
         if (!EmailHelpers.IsValidEmail(req.Email) || !PasswordHelpers.IsValidPassword(req.Password))
         {
             throw new Exception("Invalid Email or Password");
@@ -31,10 +28,6 @@ public class LoginService
         {
             throw new Exception("Invalid Email or Password");
         }
-
-        Console.WriteLine(
-            $"Found user: {userAccount.UserId} | {userAccount.Email} | {userAccount.FirstName} {userAccount.LastName}"
-        );
 
         bool passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, userAccount.PasswordHash);
 

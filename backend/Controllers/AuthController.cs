@@ -8,7 +8,7 @@ namespace SAConstruction.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        
+
         private readonly LoginService _loginService;
 
 
@@ -18,7 +18,7 @@ namespace SAConstruction.Controllers
         }
 
         [HttpPost("Login")]
-      public IActionResult Login([FromBody] LoginRequest req)
+        public IActionResult Login([FromBody] LoginRequest req)
         {
             try
             {
@@ -43,5 +43,17 @@ namespace SAConstruction.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            // Clear the refresh token cookie
+            Response.Cookies.Delete("refreshToken");
+
+            // Optionally you can also return a message
+            return Ok(new { message = "Logged out successfully." });
+        }
+
+
     }
 }
