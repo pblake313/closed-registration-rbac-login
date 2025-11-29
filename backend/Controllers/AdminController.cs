@@ -7,7 +7,7 @@ namespace SAConstruction.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ServiceFilter(typeof(AdminMiddleware))]  // 🔥 runs BEFORE every route in this controller
+    [ServiceFilter(typeof(AdminMiddleware))] 
     public class AdminController : ControllerBase
     {
         private readonly CreateUserService _createUserService;

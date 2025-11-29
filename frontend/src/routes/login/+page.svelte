@@ -4,6 +4,8 @@
     import Footer from "../../Components/Footer.svelte";
     import LoginForm from "../../Components/Forms/Auth/LoginForm.svelte";
     import Navigation from "../../Components/Navigation.svelte";
+    import Button from "../../Components/UI/Button.svelte";
+    import { accountFetch } from "../../fetchers/BasicAccountFetch";
     import { navStyle } from "../../stores/NavStore";
     import { authenticatedUser } from "../../stores/UserStore";
     import './LoginPageStyles.css'
@@ -14,6 +16,7 @@
     $: if ($authenticatedUser) {
         goto('/dashboard')
     }
+
 
 </script>
 
@@ -33,6 +36,8 @@
     <div class="containLoginForm">
         <LoginForm></LoginForm>
     </div>
+
+
     <div class="containMoreLinks">
         <a href="/forgot-password">Forgot Password?</a>
     </div>

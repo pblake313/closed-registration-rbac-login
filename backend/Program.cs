@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // REGISTER YOUR MIDDLEWARE FILTER
 builder.Services.AddScoped<AdminMiddleware>(); 
+builder.Services.AddScoped<BasicAuthMiddleware>(); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

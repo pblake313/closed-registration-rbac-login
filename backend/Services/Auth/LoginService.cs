@@ -74,7 +74,7 @@ namespace SAConstruction.Services
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // short-lived, e.g. 15 minutes
-            var expires = DateTime.UtcNow.AddMinutes(15);
+            var expires = DateTime.UtcNow.AddSeconds(45);
 
             var claims = new List<Claim>
             {
