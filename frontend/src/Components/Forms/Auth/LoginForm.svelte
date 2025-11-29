@@ -54,8 +54,6 @@
                 body: JSON.stringify(postObj)
             });
 
-            console.log(response);
-
             if (response.accessToken) {
                 accessToken.set(response.accessToken);
 

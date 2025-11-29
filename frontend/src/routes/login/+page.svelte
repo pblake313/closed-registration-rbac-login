@@ -5,7 +5,6 @@
     import LoginForm from "../../Components/Forms/Auth/LoginForm.svelte";
     import Navigation from "../../Components/Navigation.svelte";
     import Button from "../../Components/UI/Button.svelte";
-    import { accountFetch } from "../../fetchers/BasicAccountFetch";
     import { navStyle } from "../../stores/NavStore";
     import { authenticatedUser } from "../../stores/UserStore";
     import './LoginPageStyles.css'

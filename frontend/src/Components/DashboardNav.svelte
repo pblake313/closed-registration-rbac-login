@@ -2,8 +2,19 @@
     import './DashboardNav.css';
     import MainLogo from './SVG/MainLogo.svelte';
     import { page } from '$app/stores';
+    import { authenticatedUser } from '../stores/UserStore';
 
 </script>
+
+
+
+{#if $authenticatedUser}
+    <div class="user">
+        <p>{$authenticatedUser.Email}</p>
+    </div>
+{/if}
+
+<br>
 
 <a href="/" class="containHomeNav">
     <div class="loginNavFlex">
@@ -15,17 +26,18 @@
         </div>
     </div>
 </a>
-
 <br>
-
 <div class="containNavLink">
         <a href="/dashboard" class="dashNavLink" class:active={$page.url.pathname === '/dashboard'}> Dashboard</a>
 </div>
 
-<div class="containNavLink">
-    <!-- any route starting with /dashboard/accounts -->
-    <a href="/dashboard/accounts" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/accounts')}>Accounts</a>
-</div>
+{#if $authenticatedUser?.permissions.AccountManagement}
+    <div class="containNavLink">
+        <!-- any route starting with /dashboard/accounts -->
+        <a href="/dashboard/accounts" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/accounts')}>Accounts</a>
+    </div>
+{/if}
+
 
 <div class="containNavLink">
     <!-- any route starting with /dashboard/candidates -->

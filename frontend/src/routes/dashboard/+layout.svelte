@@ -5,6 +5,8 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
     import { authenticatedUser } from '../../stores/UserStore';
     import './DashboardPage.css'
         import { browser } from '$app/environment';
+    import Button from '../../Components/UI/Button.svelte';
+    import { logout } from '../../stores/AuthStore';
 
     $: if (browser && $authenticatedUser === null) {
         goto('/login');
@@ -32,7 +34,7 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
                         </div>
                         
                         <div class="moreActionSide">
-                            <p>Logout etc...</p>
+                            <Button on:click={logout} icon={'logout'} usePadding={false} buttonClass={'stayDark'}>Logout</Button>
                         </div>
                     </div>
                 </div>

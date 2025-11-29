@@ -9,11 +9,16 @@
     import FormError from "../../../Components/UI/FormError.svelte";
     import AccountItem from "../../../Components/DashboardComponents/ListItems/AccountItem.svelte";
     import AccountItemsHeader from "../../../Components/DashboardComponents/ListHeaders/AccountItemsHeader.svelte";
+    import { authenticatedUser } from "../../../stores/UserStore";
 
     onMount(async () => {
         setCrumbArray(accountCrumbs)
 
-        await fetchAllAccounts()
+        try {
+            await fetchAllAccounts()
+        } catch {
+
+        }
    
     })
 
@@ -26,24 +31,28 @@
 ></DashTop>
 
 
-{#if $allUserFetchError}
-    <FormError centerAlign={true} errorTitle={'Fetch Accounts Error'} errorMessage={$allUserFetchError}></FormError>
-{/if}
+{#if $authenticatedUser?.permissions.AccountManagement}
+
+    {#if $allUserFetchError}
+        <FormError centerAlign={true} errorTitle={'Fetch Accounts Error'} errorMessage={$allUserFetchError}></FormError>
+    {/if}
 
 
-{#if !$isFetchingAllAccounts}
+    {#if !$isFetchingAllAccounts}
 
-        {#if $allUserAccounts.length <= 0}
-            <p>No Accounts</p>
-        {:else}
-            <AccountItemsHeader></AccountItemsHeader>
-            {#each $allUserAccounts as user}
-                <AccountItem {user}></AccountItem>
-            {/each}
-            <div style="height: 50px;"></div>
+            {#if $allUserAccounts.length <= 0}
+                <p>No Accounts</p>
+            {:else}
+                <AccountItemsHeader></AccountItemsHeader>
+                {#each $allUserAccounts as user}
+                    <AccountItem {user}></AccountItem>
+                {/each}
+                <div style="height: 50px;"></div>
 
-        {/if}
+            {/if}
 
-{:else}
-    <Loader></Loader>
+    {:else}
+        <Loader></Loader>
+    {/if}
+
 {/if}

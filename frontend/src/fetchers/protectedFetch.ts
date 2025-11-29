@@ -1,16 +1,17 @@
 import { get } from "svelte/store";
-import { accessToken as accessTokenStore } from "../stores/TokenStore";
+import { logout } from "../stores/AuthStore";
+import { pushNotification } from "../stores/DashboardStores/NotificationStore";
+import { accessToken } from "../stores/TokenStore";
 
 const backendLink = import.meta.env.VITE_BACKEND_URL;
 
-export async function accountFetch<T = any>(
+export async function protectedFetch<T = any>(
     url: string,
     options: RequestInit = {}
 ): Promise<T> {
     const method = options.method || "GET";
 
-    // get the current token from the store
-    const token = get(accessTokenStore);
+    const token = get(accessToken);
 
     const res = await fetch(`${backendLink}${url}`, {
         method,
@@ -19,9 +20,15 @@ export async function accountFetch<T = any>(
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
             ...(options.headers || {})
         },
-        credentials: "include", // sends refresh token cookie automatically
+        credentials: "include",
         ...(method === "GET" ? {} : { body: options.body })
     });
+
+    // 🔄 check for a new access token from middleware
+    const newAccessToken = res.headers.get("x-new-access-token");
+    if (newAccessToken) {
+        accessToken.set(newAccessToken);
+    }
 
     const text = await res.text();
     let data: any = null;
@@ -40,6 +47,19 @@ export async function accountFetch<T = any>(
         );
         err.status = res.status;
         err.data = data;
+
+
+        // 🔥 AUTO-LOGOUT HANDLING
+        if (data?.forceLogout) {
+            console.log("⛔ FORCE LOGOUT triggered");
+
+            await logout();
+
+            pushNotification("Logout Forced", data?.message || "You have been logged out. Please login and try again.", "neutral", 6, false);
+
+            return Promise.reject(err);
+        }
+
         throw err;
     }
 

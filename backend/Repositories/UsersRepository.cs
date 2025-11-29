@@ -40,6 +40,35 @@ namespace SAConstruction.Repositories
             return users.FirstOrDefault();
         }
 
+        public User GetUserById(int userId)
+        {
+            const string sql = @"
+                SELECT TOP 1 
+                    UserId,
+                    Email,
+                    FirstName,
+                    LastName,
+                    PasswordHash,
+                    DateCreated,
+                    UpdatedAt,
+                    LastPasswordResetEmailSentAt,
+                    LastLogin
+                FROM Users.AccountData
+                WHERE UserId = @UserId;
+            ";
+
+            var users = _dapper.LoadData<User>(sql, new { UserId = userId });
+            var user = users.FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new Exception($"User with id {userId} not found.");
+            }
+
+            return user;
+        }
+
+
         public UserWithPermissions GetUserWithPermissionsById(int userId)
         {
             const string sql = @"

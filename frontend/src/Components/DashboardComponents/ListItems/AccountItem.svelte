@@ -6,7 +6,7 @@
     export let user: User
 </script>
 
-<a href="/dashboard/accounts/{user.userId}" class="userAccountListItem">
+<a href="/dashboard/accounts/{user.UserId}" class="userAccountListItem">
     <div class="col">
         <p>{user.FirstName}</p>
     </div>

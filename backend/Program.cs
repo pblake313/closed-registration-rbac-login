@@ -3,17 +3,13 @@ using SAConstruction.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// REGISTER YOUR MIDDLEWARE FILTER
+// REGISTER YOUR MIDDLEWARE -- Kicks in when we call it on the controller.
 builder.Services.AddScoped<AdminMiddleware>(); 
 builder.Services.AddScoped<BasicAuthMiddleware>(); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// ------------------
-// One CORS Policy Only
-// ------------------
 
 builder.Services.AddCors(options =>
 {
@@ -23,7 +19,8 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5173")
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials();
+            .AllowCredentials()
+            .WithExposedHeaders("x-new-access-token"); 
     });
 });
 

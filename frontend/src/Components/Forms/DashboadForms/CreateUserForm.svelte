@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import type { User } from "$lib/types/User";
-    import { adminFetch } from "../../../fetchers/AdminFetch";
+    import { protectedFetch } from "../../../fetchers/protectedFetch";
     import { upsertUserIntoAllUserAccounts } from "../../../stores/DashboardStores/AllAccountsStore";
     import { pushNotification } from "../../../stores/DashboardStores/NotificationStore";
     import { isValidEmail } from "../../../utils/validators";
@@ -61,7 +61,7 @@
         try {
             isLoading = true
 
-            const response = await adminFetch('/Admin/Create-User', {
+            const response = await protectedFetch('/Admin/Create-User', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,12 +73,13 @@
             const nowIso = new Date().toISOString();
 
            let userObj: User = {
-                userId: response.userId,
+                UserId: response.userId,
                 Email: response.email,
                 FirstName: response.firstName,
                 LastName: response.lastName,
                 UpdatedAt: response.updatedAt ?? nowIso,
                 DateCreated: response.dateCreated ?? nowIso,
+                LastPasswordResetEmailSentAt: response.lastPasswordResetEmailSentAt,
                 permissions: {
                     JobPostings: response.jobPostings,
                     AccountManagement: response.accountManagement,

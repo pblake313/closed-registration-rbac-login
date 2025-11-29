@@ -1,117 +1,59 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using SAConstruction.DTO;
 using SAConstruction.Helpers;
-using SAConstruction.Models;
 using SAConstruction.Repositories;
+using SAConstruction.Services; // make sure you import this
 
-namespace SAConstruction.Services
+public class LoginService
 {
-    public class LoginService
+    private readonly UserRepository _userRepo;
+    private readonly IConfiguration _config;
+    private readonly TokenService _tokenService;
+
+    public LoginService(IConfiguration config)
     {
-        private readonly UserRepository _userRepo;
-        private readonly IConfiguration _config;
+        _config = config;
+        _userRepo = new UserRepository(config);
+        _tokenService = new TokenService(config);
+    }
 
-        public LoginService(IConfiguration config)
+    public LoginResponse Login(LoginRequest req)
+    {
+        Console.WriteLine(req.Email);
+        Console.WriteLine(req.Password);
+
+        if (!EmailHelpers.IsValidEmail(req.Email) || !PasswordHelpers.IsValidPassword(req.Password))
         {
-            _config = config;
-            _userRepo = new UserRepository(config);
+            throw new Exception("Invalid Email or Password");
         }
 
-        // 🔥 now returns LoginResponse (access + refresh)
-        public LoginResponse Login(LoginRequest req)
+        var userAccount = _userRepo.GetUserByEmail(req.Email);
+        if (userAccount == null)
         {
-            Console.WriteLine(req.Email);
-            Console.WriteLine(req.Password);
-
-            // 1) basic validation
-            if (!EmailHelpers.IsValidEmail(req.Email) || !PasswordHelpers.IsValidPassword(req.Password))
-            {
-                throw new Exception("Invalid Email or Password");
-            }
-
-            // 2) get a user by email ==> Throw if no user
-            var userAccount = _userRepo.GetUserByEmail(req.Email);
-            if (userAccount == null)
-            {
-                throw new Exception("Invalid Email or Password");
-            }
-
-            Console.WriteLine(
-                $"Found user: {userAccount.UserId} | {userAccount.Email} | {userAccount.FirstName} {userAccount.LastName}"
-            );
-
-            // 3) compare passwords with bcrypt
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, userAccount.PasswordHash);
-
-            if (!passwordMatches)
-            {
-                Console.WriteLine($"Invalid password for user {userAccount.UserId}");
-                throw new Exception("Wrong Password... still need to handle.");
-            }
-
-            // 4) password matches... generate tokens
-            var refreshToken = GenerateRefreshToken(userAccount);
-            var accessToken = GenerateAccessToken(userAccount);
-
-            var authenticatedUser = _userRepo.GetUserWithPermissionsById(userAccount.UserId);
-
-            return new LoginResponse
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                AuthenticatedUser = authenticatedUser
-            };
+            throw new Exception("Invalid Email or Password");
         }
 
-        private string GenerateAccessToken(User user)
+        Console.WriteLine(
+            $"Found user: {userAccount.UserId} | {userAccount.Email} | {userAccount.FirstName} {userAccount.LastName}"
+        );
+
+        bool passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, userAccount.PasswordHash);
+
+        if (!passwordMatches)
         {
-            var secret = _config["jwtAccessSecret"] ?? throw new Exception("Missing jwtAccessSecret");
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            // short-lived, e.g. 15 minutes
-            var expires = DateTime.UtcNow.AddSeconds(45);
-
-            var claims = new List<Claim>
-            {
-                new Claim("userId", user.UserId.ToString()),
-            };
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: expires,
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            Console.WriteLine($"Invalid password for user {userAccount.UserId}");
+            throw new Exception("Wrong Password... still need to handle.");
         }
 
-        private string GenerateRefreshToken(User user)
+        // 🔥 use TokenService instead of local methods
+        var (accessToken, refreshToken) = _tokenService.GenerateTokenPair(userAccount);
+
+        var authenticatedUser = _userRepo.GetUserWithPermissionsById(userAccount.UserId);
+
+        return new LoginResponse
         {
-            var secret = _config["jwtRefreshSecret"] ?? throw new Exception("Missing jwtRefreshSecret");
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            // expiration — 21 days
-            var expires = DateTime.UtcNow.AddDays(21);
-
-            var claims = new List<Claim>
-            {
-                new Claim("userId", user.UserId.ToString()),
-            };
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: expires,
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            AuthenticatedUser = authenticatedUser
+        };
     }
 }

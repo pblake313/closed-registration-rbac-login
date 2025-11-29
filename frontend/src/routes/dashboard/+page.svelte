@@ -2,8 +2,8 @@
     import { onMount } from "svelte";
     import { setCrumbArray } from "../../stores/DashboardStores/BreadCrumbStore";
     import { dashCrumbs } from "$lib/BreadCrumbData";
-    import { accountFetch } from "../../fetchers/BasicAccountFetch";
     import Button from "../../Components/UI/Button.svelte";
+    import { protectedFetch } from "../../fetchers/protectedFetch";
 
     onMount(()=> {
         setCrumbArray(dashCrumbs)
@@ -11,7 +11,7 @@
 
     async function tryOut() {
         try {
-            const response = await accountFetch('/Account/Get-Authenticated-User', {
+            const response = await protectedFetch('/Account/Get-Authenticated-User', {
                 method: 'GET'
             })
 

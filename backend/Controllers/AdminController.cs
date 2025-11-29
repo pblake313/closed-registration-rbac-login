@@ -7,7 +7,10 @@ namespace SAConstruction.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ServiceFilter(typeof(AdminMiddleware))] 
+    [ServiceFilter(typeof(BasicAuthMiddleware))]   // ✅ make sure we have a valid access token and account.
+    [ServiceFilter(typeof(AdminMiddleware))]      // ✅ make sure the user has admin access.
+
+
     public class AdminController : ControllerBase
     {
         private readonly CreateUserService _createUserService;
