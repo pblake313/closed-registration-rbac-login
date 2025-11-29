@@ -39,12 +39,17 @@
 {/if}
 
 
-<div class="containNavLink">
-    <!-- any route starting with /dashboard/candidates -->
-    <a href="/dashboard/candidates" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/candidates')}> Candidates</a>
-</div>
+{#if $authenticatedUser?.permissions.ViewCandidates}
+    <div class="containNavLink">
+        <!-- any route starting with /dashboard/candidates -->
+        <a href="/dashboard/candidates" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/candidates')}> Candidates</a>
+    </div>
+{/if}
 
-<div class="containNavLink">
-    <!-- any route starting with /dashboard/job-postings -->
-    <a href="/dashboard/job-postings" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/job-postings')}>Job Postings</a>
-</div>
+{#if $authenticatedUser?.permissions.JobPostings}
+    <div class="containNavLink">
+        <!-- any route starting with /dashboard/job-postings -->
+        <a href="/dashboard/job-postings" class="dashNavLink" class:active={$page.url.pathname.startsWith('/dashboard/job-postings')}>Job Postings</a>
+    </div>
+{/if}
+

@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // REGISTER YOUR MIDDLEWARE -- Kicks in when we call it on the controller.
 builder.Services.AddScoped<AdminMiddleware>(); 
+builder.Services.AddScoped<CandidateMiddleware>(); 
+builder.Services.AddScoped<JobPostingMiddleware>(); 
 builder.Services.AddScoped<BasicAuthMiddleware>(); 
 
 builder.Services.AddControllers();
