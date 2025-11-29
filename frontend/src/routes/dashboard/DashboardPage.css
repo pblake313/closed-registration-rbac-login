@@ -11,6 +11,10 @@
     min-height: calc(100vh - 20px);
     position: fixed;
     top: 0px;
+    z-index: 90;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 .dashMainContent{
     width: calc(100% - 251px);
@@ -25,6 +29,8 @@
     background-color: white;
     position: sticky;
     top: 0px;
+    z-index: 60;
+
 }
 .insideJointBar{
     display: flex;

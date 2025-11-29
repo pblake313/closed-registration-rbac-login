@@ -7,7 +7,7 @@
     cursor: pointer;
     user-select: none;
     outline: none;
-
+    z-index: 1;
 }
 
 .toggleTrack {

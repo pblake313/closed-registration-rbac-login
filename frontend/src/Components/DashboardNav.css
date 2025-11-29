@@ -3,6 +3,7 @@
     margin: 0px;
 }
 
+
 .loginNavFlex{
     display: flex;
     justify-content: space-between;
@@ -88,5 +89,45 @@
     width: 3px;
     transition: .3s;
     background-color: #FF7B00;
+
+}
+.authUserButton{
+    border: 1px solid #f3f3f3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+}
+.circleJoint{
+    border: 1px solid rgba(133, 133, 133, 0.507);
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    position: relative;
+
+}
+.containUserEmail{
+    overflow: hidden;
+    width: calc(100% - 40px);
+    height: fit-content;
+}
+.containUserEmail p {
+    text-overflow: ellipsis;
+    font-size: 9pt;
+
+}
+.initialsText{
+    font-size: 9pt;
+    color: rgb(61, 61, 61);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0px;
+    margin: 0px;
+    font-weight: 500;
 
 }

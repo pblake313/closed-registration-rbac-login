@@ -1,11 +1,12 @@
 <script lang="ts">
     import AddIcon from '../Icons/AddIcon.svelte';
     import LogoutIcon from '../Icons/LogoutIcon.svelte';
+    import TrashIcon from '../Icons/TrashIcon.svelte';
     import './Button.css';
 
-    export let icon: 'add' | 'logout' | null = null;
+    export let icon: 'add' | 'logout' | 'trash' | null = null;
     export let iconColor: string = '#ffffff';
-    export let buttonClass: 'primary' | 'secondary' | 'darkback' | 'stayWhite' | 'stayDark' = 'primary';
+    export let buttonClass: 'primary' | 'secondary' | 'darkback' | 'stayWhite' | 'stayDark' | 'danger' = 'primary';
     export let fullWidth: boolean = false;
     export let usePadding: boolean = true;
     export let shaking: boolean = false; // 🔥 new
@@ -31,6 +32,10 @@
                 {:else if icon === 'logout'}
                     <div class="singleIconWrapper"  style="margin-top: 2px;">
                         <LogoutIcon color={iconColor} height={'15px'}></LogoutIcon>
+                    </div>
+                {:else if icon === 'trash'}
+                    <div class="singleIconWrapper"  style="margin-top: 2px;">
+                        <TrashIcon color={iconColor} height={'15px'}></TrashIcon>
                     </div>
                 {/if}
             </div>

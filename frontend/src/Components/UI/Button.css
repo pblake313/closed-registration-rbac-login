@@ -60,6 +60,14 @@
     margin: auto;
 }
 
+.danger {
+    background-color: #c21313;
+    border-color: #c21313;
+    color: white;
+}
+.danger:hover {
+    background-color: #ac1010;
+}
 
 /* icons */
 .containIcon{

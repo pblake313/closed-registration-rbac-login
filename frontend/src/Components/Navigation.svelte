@@ -11,6 +11,7 @@
     import { page } from '$app/stores';
     import Menusvg from './SVG/menusvg.svelte';
     import { tick } from 'svelte';
+    import { authenticatedUser } from '../stores/UserStore';
 
 
     let scrolled: boolean = false
@@ -87,6 +88,10 @@
     
         <div class="navRight">
             <div class="links">
+                {#if $authenticatedUser}
+                    <a href="/dashboard">Dashboard</a>
+                {/if}
+
                 <a href="/" class:activeNavLink={$page.url.pathname === '/'}>Home</a>
                 <a href="/roofing" class:activeNavLink={$page.url.pathname === '/roofing'}>Roofing</a>
                 <a href="/gutters" class:activeNavLink={$page.url.pathname === '/gutters'}>Gutters</a>

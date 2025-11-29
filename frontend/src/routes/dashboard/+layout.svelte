@@ -7,6 +7,7 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
         import { browser } from '$app/environment';
     import Button from '../../Components/UI/Button.svelte';
     import { logout } from '../../stores/AuthStore';
+    import MainLogo from '../../Components/SVG/MainLogo.svelte';
 
     $: if (browser && $authenticatedUser === null) {
         goto('/login');
@@ -34,14 +35,19 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
                         </div>
                         
                         <div class="moreActionSide">
-                            <Button iconColor={'#000'} on:click={logout} icon={'logout'} usePadding={false} buttonClass={'stayWhite'}>Logout</Button>
+                            <a href="/" class="containHomeNav">
+                                <div class="loginNavFlex">
+                                    <div class="wrapDashNavLogo">
+                                        <MainLogo height={'100%'} />
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <slot />
                     
-
             </div>
         </div>
     </div>

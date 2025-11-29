@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { User } from "$lib/types/User";
+    import { formatDateTime, formatReadableDate } from "../../../utils/dateFormatter";
     import DashboardBox from "../../DashboardComponents/DashboardBox.svelte";
     import Button from "../../UI/Button.svelte";
     import EmailInput from "../../UI/EmailInput.svelte";
@@ -41,7 +42,10 @@
                     <div class="permissionToggleHead">
                         <h4>Account Management</h4>
                         <Toggler 
-                            onChange={(v) => {userToEdit.permissions.AccountManagement = v}} 
+                            onChange={(v) => {
+                                userToEdit.permissions.AccountManagement = v
+                                formTouched = true
+                            }} 
                             value={userToEdit.permissions.AccountManagement}
                         ></Toggler>
                     </div>
@@ -52,7 +56,10 @@
                     <div class="permissionToggleHead">
                         <h4>Candidate Management</h4>
                         <Toggler 
-                            onChange={(v) => {userToEdit.permissions.ViewCandidates = v}} 
+                            onChange={(v) => {
+                                userToEdit.permissions.ViewCandidates = v
+                                formTouched = true
+                            }} 
                             value={userToEdit.permissions.ViewCandidates}
                         ></Toggler>
                     </div>
@@ -63,7 +70,11 @@
                     <div class="permissionToggleHead">
                         <h4>Job Postings</h4>
                         <Toggler 
-                            onChange={(v) => {userToEdit.permissions.JobPostings = v}} 
+                            onChange={(v) => {
+                                userToEdit.permissions.JobPostings = v
+                                formTouched = true
+
+                            }} 
                             value={userToEdit.permissions.JobPostings}
                         ></Toggler>
                     </div>
@@ -112,24 +123,30 @@
                     <div style="height: 5px;"></div>
                     <div class="singlePermission">
                         <h4>Created At</h4>
-                        <p>{userToEdit.DateCreated || 'NULL'}</p>
+                        <p>{formatDateTime(userToEdit.DateCreated)}</p>
                     </div>
                     <div style="height: 5px;"></div>
                     <div class="singlePermission">
                         <h4>Last Updated</h4>
-                        <p>{userToEdit.UpdatedAt || 'NULL'}</p>
+                        <p>{formatDateTime(userToEdit.UpdatedAt)}</p>
                     </div>
                     <div style="height: 5px;"></div>
                     <div class="singlePermission">
-                        <h4>Last Password Reset Email Sent At </h4>
-                        <p>(Cleared After Login) - {userToEdit.LastPasswordResetEmailSentAt || 'NULL'}</p>
+                        <h4>Last Password Reset Email Sent At - Cleared After Login</h4>
+                        <p>{formatDateTime(userToEdit.LastPasswordResetEmailSentAt)}</p>
                     </div>
                     <div style="height: 5px;"></div>
                     <div class="singlePermission">
                         <h4>Last Manual Login</h4>
-                        <p>{userToEdit.LastLogin || 'NULL'}</p>
+                        <p>{formatDateTime(userToEdit.LastLogin)}</p>
                     </div>
                 </DashboardBox>
+
+                <div class="dangerZone">
+                    <div></div>
+                    <Button icon={'trash'} usePadding={false} buttonClass={'danger'}>Delete Account</Button>
+
+                </div>
       
             </div>
 
