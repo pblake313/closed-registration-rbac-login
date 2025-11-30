@@ -59,7 +59,6 @@ namespace SAConstruction.Controllers
         {
             try
             {
-
                 var result = _userRepo.GetUserWithPermissionsById(userId);
 
                 if (result == null)
