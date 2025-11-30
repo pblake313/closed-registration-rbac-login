@@ -7,10 +7,10 @@
     /* Stripe-ish multi-color band */
     background: linear-gradient(
         110deg,
-        #ff7b007a,
-        #aaaaaa,
-        #bbbbbb,
-        rgb(255, 237, 186)
+        #0667d6,
+        #a6a9af,
+        #c1c9d8,
+        rgb(135, 180, 247)
     );
     background-size: 320% 320%;
     animation: stripeGradient 22s ease-in-out infinite;

@@ -8,11 +8,12 @@
     transition: .4s;
 }
 .primary {
-    background-color: #FF7B00;
+    background-color: #0667d6;
+    border-color: #0667d6;
     color: white;
 }
 .primary:hover {
-    background-color: #da6a00;
+    background-color: #0852a7;
 }
 
 .secondary {
