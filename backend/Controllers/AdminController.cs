@@ -59,8 +59,6 @@ namespace SAConstruction.Controllers
         {
             try
             {
-                Console.WriteLine("Test ew branc ruleset.");
-
                 var result = _userRepo.GetUserWithPermissionsById(userId);
 
                 if (result == null)
