@@ -1,23 +1,13 @@
 <script>
     import { onMount } from "svelte";
-    import ContactPointer from "../Components/PageComponents/ContactPointer/ContactPointer.svelte";
-    import Hero from "../Components/PageComponents/Hero/Hero.svelte";
-    import Outsidelinks from "../Components/PageComponents/OutsideLinks/Outsidelinks.svelte";
-    import ResidentialServicesGrid from "../Components/PageComponents/Servicesgrid/ResidentialServicesGrid.svelte";
-    import Testimonials from "../Components/PageComponents/Testimonials/Testimonials.svelte";
     import { navStyle } from "../stores/NavStore";
-    import ImageLeftSection from "../Components/PageComponents/AboutPointer/ImageLeftSection.svelte";
-    import { homePageSlider } from "$lib/ImageSwiperData";
-    import ImageSwiper from "../Components/PageComponents/Swipers/ImageSwiper.svelte";
     import Navigation from "../Components/Navigation.svelte";
-    import Footer from "../Components/Footer.svelte";
-
     
     const frontendUrl = import.meta.env.VITE_FRONTEND_URL
     const metaImage = `${frontendUrl}/Images/MetaData/homemeta.png`;
 
     onMount(()=>{
-        navStyle.set({class: 'transparent'})
+        navStyle.set({class: 'bright'})
     })
 
 
@@ -46,18 +36,6 @@
 
 <Navigation></Navigation>
 
-<Hero></Hero>
+<p>Home page</p>
 
-<Outsidelinks></Outsidelinks>
 
-<Testimonials></Testimonials>
-
-<ImageSwiper subText="Past Projects" slideTitle="A look at what we've built." slideImages={homePageSlider}></ImageSwiper>
-
-<ResidentialServicesGrid></ResidentialServicesGrid>
-
-<ImageLeftSection></ImageLeftSection>
-
-<ContactPointer></ContactPointer>
-
-<Footer></Footer>

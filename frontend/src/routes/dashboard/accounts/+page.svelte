@@ -2,14 +2,14 @@
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import DashTop from "../../../Components/DashboardComponents/DashTop.svelte";
-    import { setCrumbArray } from "../../../stores/DashboardStores/BreadCrumbStore";
     import { accountCrumbs } from "$lib/BreadCrumbData";
-    import { allUserAccounts, allUserFetchError, fetchAllAccounts, isFetchingAllAccounts } from "../../../stores/DashboardStores/AllAccountsStore";
+    import { allUserAccounts, allUserFetchError, fetchAllAccounts, isFetchingAllAccounts } from "../../../stores/AllAccountsStore";
     import Loader from "../../../Components/UI/Loaders/Loader.svelte";
     import FormError from "../../../Components/UI/FormError.svelte";
     import AccountItem from "../../../Components/DashboardComponents/ListItems/AccountItem.svelte";
     import AccountItemsHeader from "../../../Components/DashboardComponents/ListHeaders/AccountItemsHeader.svelte";
     import { authenticatedUser } from "../../../stores/UserStore";
+    import { setCrumbArray } from "../../../stores/BreadCrumbStore";
 
     onMount(async () => {
         setCrumbArray(accountCrumbs)

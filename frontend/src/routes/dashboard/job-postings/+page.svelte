@@ -1,12 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { setCrumbArray } from "../../../stores/DashboardStores/BreadCrumbStore";
     import { jobPostCrumbs } from "$lib/BreadCrumbData";
     import { authenticatedUser } from "../../../stores/UserStore";
     import Button from "../../../Components/UI/Button.svelte";
     import Loader from "../../../Components/UI/Loaders/Loader.svelte";
     import { protectedFetch } from "../../../fetchers/protectedFetch";
     import { goto } from "$app/navigation";
+    import { setCrumbArray } from "../../../stores/BreadCrumbStore";
 
     onMount(()=> {
         setCrumbArray(jobPostCrumbs)

@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { setCrumbArray } from "../../stores/DashboardStores/BreadCrumbStore";
     import { dashCrumbs } from "$lib/BreadCrumbData";
     import { authenticatedUser } from "../../stores/UserStore";
     import { goto } from "$app/navigation";
+    import { setCrumbArray } from "../../stores/BreadCrumbStore";
 
     onMount(()=> {
         setCrumbArray(dashCrumbs)

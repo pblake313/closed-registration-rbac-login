@@ -1,10 +1,8 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
-    import type { Notification } from '../stores/DashboardStores/NotificationStore';
-    import { removeNotification } from '../stores/DashboardStores/NotificationStore';
     import './NotificationItem.css'
-    import CloseButton from './UI/CloseButton.svelte';
     import CloseIcon from './Icons/CloseIcon.svelte';
+    import { removeNotification, type Notification } from '../stores/NotificationStore';
 
     export let notification: Notification;
 

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import LoginAnimation from "../../../Components/Animations/LoginAnimation.svelte";
-    import Footer from "../../../Components/Footer.svelte";
     import Navigation from "../../../Components/Navigation.svelte";
     import "./ResetStyles.css";
     import { navStyle } from "../../../stores/NavStore";
@@ -32,4 +31,3 @@
     <div class="backLines rightb"></div>
 </div>
 
-<Footer></Footer>

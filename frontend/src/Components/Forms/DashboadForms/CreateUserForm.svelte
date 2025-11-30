@@ -2,8 +2,8 @@
     import { goto } from "$app/navigation";
     import type { User } from "$lib/types/User";
     import { protectedFetch } from "../../../fetchers/protectedFetch";
-    import { upsertUserIntoAllUserAccounts } from "../../../stores/DashboardStores/AllAccountsStore";
-    import { pushNotification } from "../../../stores/DashboardStores/NotificationStore";
+    import { upsertUserIntoAllUserAccounts } from "../../../stores/AllAccountsStore";
+    import { pushNotification } from "../../../stores/NotificationStore";
     import { isValidEmail } from "../../../utils/validators";
     import DashboardBox from "../../DashboardComponents/DashboardBox.svelte";
     import DashComponentHead from "../../DashboardComponents/DashComponentHead.svelte";
@@ -81,7 +81,9 @@
                 DateCreated: response.dateCreated ?? nowIso,
                 LastPasswordResetEmailSentAt: response.lastPasswordResetEmailSentAt,
                 LastLogin: response.lastLogin,
-                LastAutoLogin: response.LastAutoLogin,
+                LastAutoLogin: response.lastAutoLogin,
+                AccountLockedUntil: response.accountLockedUntil,
+                PasswordAttempts: response.passwordAttempts,
                 permissions: {
                     JobPostings: response.jobPostings,
                     AccountManagement: response.accountManagement,

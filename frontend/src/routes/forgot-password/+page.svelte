@@ -1,7 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import LoginAnimation from "../../Components/Animations/LoginAnimation.svelte";
-    import Footer from "../../Components/Footer.svelte";
     import ForgotPasswordForm from "../../Components/Forms/Auth/ForgotPasswordForm.svelte";
     import Navigation from "../../Components/Navigation.svelte";
     import { navStyle } from "../../stores/NavStore";
@@ -41,5 +40,3 @@
     <div class="backLines rightb"></div>
 
 </div>
-
-<Footer></Footer>

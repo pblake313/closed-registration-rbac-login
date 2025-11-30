@@ -1,6 +1,6 @@
 import type { User } from "$lib/types/User";
 import { get, writable } from "svelte/store";
-import { protectedFetch } from "../../fetchers/protectedFetch";
+import { protectedFetch } from "../fetchers/protectedFetch";
 
 export const hasFetchedAllAccounts = writable<boolean>(false)
 export const isFetchingAllAccounts = writable<boolean>(false)
