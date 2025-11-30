@@ -23,6 +23,8 @@ BEGIN
         FirstName NVARCHAR(100) NULL,
         LastName NVARCHAR(100) NULL,
         PasswordHash NVARCHAR(255) NULL,
+        AccountLockedUntil DATETIME2 NULL,
+        PasswordAttempts INT NULL,
         DateCreated DATETIME2 NOT NULL CONSTRAINT DF_AccountData_DateCreated DEFAULT SYSUTCDATETIME(),
         UpdatedAt  DATETIME2 NOT NULL CONSTRAINT DF_AccountData_UpdatedAt  DEFAULT SYSUTCDATETIME(),
         LastPasswordResetEmailSentAt DATETIME2 NULL,

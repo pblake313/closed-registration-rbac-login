@@ -93,5 +93,21 @@ namespace SAConstruction.Controllers
             }
         }
 
+        [HttpPatch("Edit-User/{userId:int}")]
+        public IActionResult EditUser(int userId, [FromBody] EditUserRequest req)
+        {
+            try
+            {   
+                _userRepo.UpdateUser(userId, req);
+
+                var updatedUser = _userRepo.GetUserWithPermissionsById(userId);
+                return Ok(new {updatedUser});
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

@@ -17,9 +17,9 @@
     <div class="col">
         <p>
             {[
-                user.permissions.AccountManagement && "Account Management",
-                user.permissions.JobPostings && "Job Postings",
-                user.permissions.ViewCandidates && "View Candidates"
+                user.permissions.AccountManagement && "Accounts",
+                user.permissions.JobPostings && "Jobs",
+                user.permissions.ViewCandidates && "Candidates"
             ].filter(Boolean).join(", ") || "-"}
         </p>
     </div>

@@ -42,12 +42,11 @@ namespace SAConstruction.Middleware
                 return;
             }
 
-            Console.WriteLine("✅ JobPostingMiddleware: User has admin permissions.");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Console.WriteLine("<<< JobPostingMiddleware: AFTER AdminController");
+            // Console.WriteLine("<<< JobPostingMiddleware: AFTER AdminController");
         }
     }
 }

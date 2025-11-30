@@ -1,39 +1,45 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { accessToken } from "./TokenStore";
 import { authenticatedUser } from "./UserStore";
 import { goto } from "$app/navigation";
-import { allUserAccounts, allUserFetchError, hasFetchedAllAccounts, isFetchingAllAccounts } from "./DashboardStores/AllAccountsStore";
+import {
+    allUserAccounts,
+    allUserFetchError,
+    hasFetchedAllAccounts,
+    isFetchingAllAccounts
+} from "./DashboardStores/AllAccountsStore";
 import { protectedFetch } from "../fetchers/protectedFetch";
 import type { User } from "$lib/types/User";
 import { publicFetch } from "../fetchers/PublicFetch";
 
-export const autoLoginAttempted = writable<boolean>(false)
+export const autoLoginAttempted = writable<boolean>(false);
+export const isAutoLoggingIn = writable<boolean>(false);
 
+export async function autoLogin(): Promise<User | null> {
+    // 🔒 Hard guard: if we've already tried, don't do it again
+    if (get(autoLoginAttempted)) {
+        return get(authenticatedUser) ?? null;
+    }
 
-export const isAutoLoggingIn = writable<boolean>(false)
+    autoLoginAttempted.set(true);
+    isAutoLoggingIn.set(true);
 
-
-export async function autoLogin(){
     try {
-        isAutoLoggingIn.set(true)
-
-        const user = await getAuthenticatedUser()
-
-
+        const user = await getAuthenticatedUser();
+        return user;
     } catch (err) {
-        console.log(err)
-
+        console.error("autoLogin error:", err);
+        return null;
     } finally {
-        isAutoLoggingIn.set(false)
+        isAutoLoggingIn.set(false);
     }
 }
 
-
-export async function getAuthenticatedUser(){
+export async function getAuthenticatedUser(): Promise<User | null> {
     try {
-        const response = await protectedFetch('/Account/Get-Authenticated-User', {
-            method: 'GET'
-        })
+        const response = await protectedFetch("/Account/Get-Authenticated-User", {
+            method: "GET"
+        });
 
         const authUser: User = {
             UserId: response.userId,
@@ -50,44 +56,37 @@ export async function getAuthenticatedUser(){
                 AccountManagement: response.accountManagement,
                 JobPostings: response.jobPostings
             }
-        }
+        };
 
-        authenticatedUser.set(authUser)
-
+        authenticatedUser.set(authUser);
+        return authUser;
     } catch (err) {
-        return null
+        console.error("getAuthenticatedUser failed:", err);
+        authenticatedUser.set(null);
+        return null;
     }
 }
 
 export async function logout() {
-    //still need to clear the cookie
-
-
     try {
-
-
-        accessToken.set(null)
-        authenticatedUser.set(null)
-
+        accessToken.set(null);
+        authenticatedUser.set(null);
 
         // reset all stores...
-        allUserAccounts.set([])
-        allUserFetchError.set(null)
-        isFetchingAllAccounts.set(false)
-        hasFetchedAllAccounts.set(false)
+        allUserAccounts.set([]);
+        allUserFetchError.set(null);
+        isFetchingAllAccounts.set(false);
+        hasFetchedAllAccounts.set(false);
 
-        const response = await publicFetch('/Auth/Logout', {method: 'GET'})
+        // reset auto-login state for next time
+        autoLoginAttempted.set(false);
+        isAutoLoggingIn.set(false);
 
-        console.log(response)
-
+        const response = await publicFetch("/Auth/Logout", { method: "GET" });
+        console.log(response);
     } catch (err) {
-        console.log(err)
-
+        console.log(err);
     } finally {
-        goto('/login')
-
+        goto("/login");
     }
-
-
-    
 }

@@ -37,6 +37,8 @@ export async function fetchAllAccounts() {
                 LastLogin: user.lastLogin,
                 LastAutoLogin: user.lastAutoLogin,
                 LastPasswordResetEmailSentAt: user.lastPasswordResetEmailSentAt,
+                AccountLockedUntil: user.accountLockedUntil,
+                PasswordAttempts: user.passwordAttempts,
                 permissions: {
                     JobPostings: user.jobPostings,
                     AccountManagement: user.accountManagement,

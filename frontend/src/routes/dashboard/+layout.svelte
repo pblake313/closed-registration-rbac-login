@@ -1,20 +1,33 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { browser } from '$app/environment';
+    import { onMount } from 'svelte';
+    import { get } from 'svelte/store';
+
     import BreadCrumbs from '../../Components/DashboardComponents/BreadCrumbs.svelte';
-import DashboardNav from '../../Components/DashboardNav.svelte';
-    import { authenticatedUser } from '../../stores/UserStore';
-    import './DashboardPage.css'
-        import { browser } from '$app/environment';
-    import Button from '../../Components/UI/Button.svelte';
-    import { autoLoginAttempted, logout } from '../../stores/AuthStore';
+    import DashboardNav from '../../Components/DashboardNav.svelte';
     import MainLogo from '../../Components/SVG/MainLogo.svelte';
 
-    $: if (browser && $autoLoginAttempted && $authenticatedUser === null) {
-        goto('/login');
-    }
+    import { authenticatedUser } from '../../stores/UserStore';
+    import { autoLogin } from '../../stores/AuthStore';
+
+    import './DashboardPage.css';
+
+    onMount(async () => {
+        if (!browser) return;
+
+        // already logged in? stay here
+        if (get(authenticatedUser)) return;
+
+        // try auto-login (once)
+        const user = await autoLogin();
+
+        // if still no user, bounce
+        if (!user) {
+            goto('/login');
+        }
+    });
 </script>
-
-
 {#if $authenticatedUser}
     <div class="dashboardFlex">
 

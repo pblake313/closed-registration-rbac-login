@@ -205,7 +205,7 @@ namespace SAConstruction.Middleware
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Console.WriteLine("<<< BasicAuthMiddleware: AFTER controller");
+            // Console.WriteLine("<<< BasicAuthMiddleware: AFTER controller");
         }
     }
 }

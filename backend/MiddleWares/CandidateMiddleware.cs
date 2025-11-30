@@ -42,12 +42,12 @@ namespace SAConstruction.Middleware
                 return;
             }
 
-            Console.WriteLine("✅ CandidateMiddleware: User has admin permissions.");
+            // Console.WriteLine("✅ CandidateMiddleware: User has admin permissions.");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Console.WriteLine("<<< CandidateMiddleware: AFTER AdminController");
+            // Console.WriteLine("<<< CandidateMiddleware: AFTER AdminController");
         }
     }
 }

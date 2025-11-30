@@ -1,9 +1,8 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using Dapper;              // <--- important for Dapper extension methods
+using Dapper; 
 using SAConstruction.Models;
 using SAConstruction.DTO;
-using BCrypt.Net;
 
 namespace SAConstruction.Repositories
 {
@@ -32,7 +31,9 @@ namespace SAConstruction.Repositories
                     UpdatedAt,
                     LastPasswordResetEmailSentAt,
                     LastLogin,
-                    LastAutoLogin
+                    LastAutoLogin,
+                    PasswordAttempts,
+                    AccountLockedUntil
                 FROM Users.AccountData
                 WHERE Email = @Email;
             ";
@@ -54,7 +55,9 @@ namespace SAConstruction.Repositories
                     UpdatedAt,
                     LastPasswordResetEmailSentAt,
                     LastLogin,
-                    LastAutoLogin
+                    LastAutoLogin,
+                    PasswordAttempts,
+                    AccountLockedUntil
 
                 FROM Users.AccountData
                 WHERE UserId = @UserId;
@@ -86,6 +89,8 @@ namespace SAConstruction.Repositories
                     u.LastPasswordResetEmailSentAt,
                     u.LastLogin,
                     u.LastAutoLogin,
+                    u.PasswordAttempts,
+                    u.AccountLockedUntil,
                     COALESCE(p.JobPostings, 0)         AS JobPostings,
                     COALESCE(p.AccountManagement, 0)   AS AccountManagement,
                     COALESCE(p.ViewCandidates, 0)      AS ViewCandidates
@@ -109,8 +114,11 @@ namespace SAConstruction.Repositories
 
         public UserWithPermissions CreateUser(CreateUserRequest request)
         {
-            // generate random password
+            // 1) Generate a random password (plain)
             string randomPassword = GenerateRandomPassword(10);
+
+            // 2) Hash it BEFORE storing in the database
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
 
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -118,6 +126,7 @@ namespace SAConstruction.Repositories
 
             try
             {
+                // ---- INSERT ACCOUNT ----
                 const string insertAccountSql = @"
                     INSERT INTO Users.AccountData
                         (Email, FirstName, LastName, PasswordHash, DateCreated, UpdatedAt)
@@ -128,16 +137,18 @@ namespace SAConstruction.Repositories
 
                 var newUserId = conn.QuerySingle<int>(
                     insertAccountSql,
-                    new {
+                    new
+                    {
                         Email = request.Email,
                         FirstName = request.FirstName,
                         LastName = request.LastName,
-                        PasswordHash = randomPassword,  // store unhashed
+                        PasswordHash = hashedPassword,    // ✅ store HASHED password
                         Now = DateTime.UtcNow
                     },
                     transaction: tran
                 );
 
+                // ---- INSERT PERMISSIONS ----
                 const string insertPermSql = @"
                     INSERT INTO Users.UserPermissions
                         (UserId, JobPostings, AccountManagement, ViewCandidates)
@@ -147,7 +158,8 @@ namespace SAConstruction.Repositories
 
                 conn.Execute(
                     insertPermSql,
-                    new {
+                    new
+                    {
                         UserId = newUserId,
                         JobPostings = request.JobPostings,
                         AccountManagement = request.AccountManagement,
@@ -158,13 +170,14 @@ namespace SAConstruction.Repositories
 
                 tran.Commit();
 
+                // 3) Return user WITH the plain random password (so admin can send it)
                 return new UserWithPermissions
                 {
                     UserId = newUserId,
                     Email = request.Email,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
-                    PasswordHash = randomPassword,         // return the random password
+                    PasswordHash = randomPassword,     // ✅ return PLAIN password
                     DateCreated = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     JobPostings = request.JobPostings,
@@ -178,6 +191,7 @@ namespace SAConstruction.Repositories
                 throw;
             }
         }
+
 
         public UserWithPermissions[] GetAllUsersWithPermissions()
         {
@@ -193,6 +207,8 @@ namespace SAConstruction.Repositories
                     u.LastPasswordResetEmailSentAt,
                     u.LastLogin,
                     u.LastAutoLogin,
+                    u.PasswordAttempts,
+                    u.AccountLockedUntil,
                     COALESCE(p.JobPostings, 0)       AS JobPostings,
                     COALESCE(p.AccountManagement, 0) AS AccountManagement,
                     COALESCE(p.ViewCandidates, 0)    AS ViewCandidates
@@ -214,7 +230,9 @@ namespace SAConstruction.Repositories
                 UPDATE Users.AccountData
                 SET 
                     LastLogin = SYSUTCDATETIME(),
-                    UpdatedAt = SYSUTCDATETIME()
+                    UpdatedAt = SYSUTCDATETIME(),
+                    PasswordAttempts = 0,
+                    AccountLockedUntil = NULL
                 WHERE UserId = @UserId;
             ";
 
@@ -248,6 +266,115 @@ namespace SAConstruction.Repositories
 
             // Return the current user data (including updated LastLogin)
             return GetUserWithPermissionsById(userId);
+        }
+
+
+        public int IncrementLoginAttemptsAndLock(int userId)
+        {
+            const string sql = @"
+                UPDATE Users.AccountData
+                SET 
+                    PasswordAttempts = CASE 
+                        -- If this attempt triggers lockout
+                        WHEN ISNULL(PasswordAttempts, 0) + 1 >= 7
+                            THEN 0                              -- reset attempts
+                        ELSE ISNULL(PasswordAttempts, 0) + 1   -- increment normally
+                    END,
+                    UpdatedAt = SYSUTCDATETIME(),
+                    
+                    AccountLockedUntil = CASE
+                        -- If this attempt triggers lockout and not already locked
+                        WHEN ISNULL(PasswordAttempts, 0) + 1 >= 7
+                            AND (AccountLockedUntil IS NULL OR AccountLockedUntil < SYSUTCDATETIME())
+                            THEN DATEADD(hour, 1, SYSUTCDATETIME())
+                        ELSE AccountLockedUntil
+                    END
+
+                OUTPUT INSERTED.PasswordAttempts
+                WHERE UserId = @UserId;
+            ";
+
+            var attempts = _dapper.LoadDataSingle<int>(sql, new { UserId = userId });
+
+            if (attempts < 0)
+                throw new Exception("An error on our end has occurred. Please try again later.");
+
+            return attempts;
+        }
+
+        public void UpdateUser(int userId, EditUserRequest req)
+        {
+            if (req == null)
+            {
+                throw new ArgumentNullException(nameof(req), "EditUserRequest cannot be null.");
+            }
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using var tran = conn.BeginTransaction();
+
+            try
+            {
+                // 1) Update basic account data
+                const string updateAccountSql = @"
+                    UPDATE Users.AccountData
+                    SET 
+                        FirstName = @FirstName,
+                        LastName  = @LastName,
+                        UpdatedAt = SYSUTCDATETIME()
+                    WHERE UserId = @UserId;
+                ";
+
+                int affectedAccountRows = conn.Execute(
+                    updateAccountSql,
+                    new
+                    {
+                        UserId = userId,
+                        FirstName = req.FirstName,
+                        LastName = req.LastName
+                    },
+                    transaction: tran
+                );
+
+                if (affectedAccountRows == 0)
+                {
+                    throw new Exception($"User with id {userId} not found in AccountData.");
+                }
+
+                // 2) Update permissions
+                const string updatePermsSql = @"
+                    UPDATE Users.UserPermissions
+                    SET
+                        JobPostings       = @JobPostings,
+                        AccountManagement = @AccountManagement,
+                        ViewCandidates    = @ViewCandidates
+                    WHERE UserId = @UserId;
+                ";
+
+                int affectedPermRows = conn.Execute(
+                    updatePermsSql,
+                    new
+                    {
+                        UserId = userId,
+                        JobPostings = req.JobPostings,
+                        AccountManagement = req.AccountManagement,
+                        ViewCandidates = req.ViewCandidates
+                    },
+                    transaction: tran
+                );
+
+                if (affectedPermRows == 0)
+                {
+                    throw new Exception($"Permissions for user id {userId} not found.");
+                }
+
+                tran.Commit();
+            }
+            catch
+            {
+                tran.Rollback();
+                throw;
+            }
         }
 
         public void DeleteUser(int userId)

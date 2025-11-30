@@ -8,6 +8,8 @@ export interface User {
     LastPasswordResetEmailSentAt: string | null,
     LastLogin: string | null,
     LastAutoLogin: string | null,
+    AccountLockedUntil: string | null,
+    PasswordAttempts: number | null,
     permissions: {
         JobPostings: boolean;
         AccountManagement: boolean;

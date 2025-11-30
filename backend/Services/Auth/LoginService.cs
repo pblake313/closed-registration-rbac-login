@@ -18,15 +18,18 @@ public class LoginService
 
     public LoginResponse Login(LoginRequest req)
     {
-        if (!EmailHelpers.IsValidEmail(req.Email) || !PasswordHelpers.IsValidPassword(req.Password))
+        var userAccount = _userRepo.GetUserByEmail(req.Email);
+        if (userAccount == null || req.Password == null)
         {
             throw new Exception("Invalid Email or Password");
         }
 
-        var userAccount = _userRepo.GetUserByEmail(req.Email);
-        if (userAccount == null)
+        // here check if the account is locked... 
+        if (userAccount.AccountLockedUntil.HasValue && userAccount.AccountLockedUntil > DateTime.UtcNow)
         {
-            throw new Exception("Invalid Email or Password");
+            // You can customize this message however you want
+            var lockedUntilLocal = userAccount.AccountLockedUntil.Value.ToLocalTime();
+            throw new Exception($"Your account is locked until {lockedUntilLocal:g}. Please try again later.");
         }
 
         bool passwordMatches = BCrypt.Net.BCrypt.Verify(req.Password, userAccount.PasswordHash);
@@ -34,7 +37,10 @@ public class LoginService
         if (!passwordMatches)
         {
             Console.WriteLine($"Invalid password for user {userAccount.UserId}");
-            throw new Exception("Wrong Password... still need to handle.");
+
+            _userRepo.IncrementLoginAttemptsAndLock(userAccount.UserId);
+
+            throw new Exception("Invalid Email or Password");
         }
 
         // 🔥 use TokenService instead of local methods

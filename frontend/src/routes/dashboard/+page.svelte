@@ -2,9 +2,15 @@
     import { onMount } from "svelte";
     import { setCrumbArray } from "../../stores/DashboardStores/BreadCrumbStore";
     import { dashCrumbs } from "$lib/BreadCrumbData";
+    import { authenticatedUser } from "../../stores/UserStore";
+    import { goto } from "$app/navigation";
 
     onMount(()=> {
         setCrumbArray(dashCrumbs)
+
+        if (!$authenticatedUser){
+            goto('/login')
+        }
     })
 </script>
 

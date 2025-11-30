@@ -12,6 +12,9 @@ namespace SAConstruction.Models
 
         public DateTime? DateCreated { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public DateTime? AccountLockedUntil { get; set; }
+        public int? PasswordAttempts { get; set; }
+
 
         public DateTime? LastPasswordResetEmailSentAt {get; set;}
         public DateTime? LastLogin {get; set;}

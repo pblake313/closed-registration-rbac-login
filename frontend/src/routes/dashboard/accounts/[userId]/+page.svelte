@@ -47,6 +47,8 @@
                 LastPasswordResetEmailSentAt: res.lastPasswordResetEmailSentAt,
                 LastLogin: res.lastLogin,
                 LastAutoLogin: res.lastAutoLogin,
+                AccountLockedUntil: res.accountLockedUntil,
+                PasswordAttempts: res.passwordAttempts,
                 permissions : {
                     JobPostings: res.jobPostings,
                     AccountManagement: res.accountManagement,
