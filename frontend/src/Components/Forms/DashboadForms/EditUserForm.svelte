@@ -8,11 +8,11 @@
     import './EditUserForm.css'
     import { protectedFetch } from "../../../fetchers/protectedFetch";
     import Loader from "../../UI/Loaders/Loader.svelte";
-    import { removeUserFromAccountsArray, upsertUserIntoAllUserAccounts } from "../../../stores/DashboardStores/AllAccountsStore";
-    import { pushNotification } from "../../../stores/DashboardStores/NotificationStore";
+    import { removeUserFromAccountsArray, upsertUserIntoAllUserAccounts } from "../../../stores/AllAccountsStore";
     import { goto } from "$app/navigation";
     import { authenticatedUser } from "../../../stores/UserStore";
     import { logout } from "../../../stores/AuthStore";
+    import { pushNotification } from "../../../stores/NotificationStore";
 
     export let userToEdit: User 
     let formTouched: boolean = false

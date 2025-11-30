@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { User } from "$lib/types/User";
     import { publicFetch } from "../../../fetchers/PublicFetch";
-    import { pushNotification } from "../../../stores/DashboardStores/NotificationStore";
+    import { pushNotification } from "../../../stores/NotificationStore";
     import { accessToken } from "../../../stores/TokenStore";
     import { authenticatedUser } from "../../../stores/UserStore";
     import { isValidEmail } from "../../../utils/validators";
@@ -69,6 +69,9 @@
                         UpdatedAt: authUser.updatedeAt,
                         LastLogin: authUser.lastLogin,
                         LastPasswordResetEmailSentAt: authUser.lastPasswordResetEmailSentAt,
+                        LastAutoLogin: authUser.lastAutoLogin,
+                        AccountLockedUntil: authUser.accountLockedUntil,
+                        PasswordAttempts: authUser.passwordAttempts,
                         permissions: {
                             JobPostings: authUser.jobPostings,
                             AccountManagement: authUser.accountManagement,

@@ -1,14 +1,13 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { setCrumbArray } from "../../../stores/DashboardStores/BreadCrumbStore";
     import { candidateCrumbs } from "$lib/BreadCrumbData";
     import DashTop from "../../../Components/DashboardComponents/DashTop.svelte";
-    import { pushNotification } from "../../../stores/DashboardStores/NotificationStore";
     import Button from "../../../Components/UI/Button.svelte";
     import Loader from "../../../Components/UI/Loaders/Loader.svelte";
     import { protectedFetch } from "../../../fetchers/protectedFetch";
     import { authenticatedUser } from "../../../stores/UserStore";
     import { goto } from "$app/navigation";
+    import { setCrumbArray } from "../../../stores/BreadCrumbStore";
 
 
     let loading: boolean = false

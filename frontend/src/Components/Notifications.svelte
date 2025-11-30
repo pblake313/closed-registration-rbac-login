@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { notificationArray } from '../stores/DashboardStores/NotificationStore';
+    import { notificationArray } from '../stores/NotificationStore';
     import NotificationItem from './NotificationItem.svelte';
     import './Notifications.css';
 

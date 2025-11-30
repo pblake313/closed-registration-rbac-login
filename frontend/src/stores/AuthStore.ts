@@ -7,7 +7,7 @@ import {
     allUserFetchError,
     hasFetchedAllAccounts,
     isFetchingAllAccounts
-} from "./DashboardStores/AllAccountsStore";
+} from "./AllAccountsStore";
 import { protectedFetch } from "../fetchers/protectedFetch";
 import type { User } from "$lib/types/User";
 import { publicFetch } from "../fetchers/PublicFetch";
@@ -51,6 +51,8 @@ export async function getAuthenticatedUser(): Promise<User | null> {
             UpdatedAt: response.updatedAt,
             LastAutoLogin: response.lastAutoLogin,
             LastLogin: response.lastLogin,
+            PasswordAttempts: response.passwordAttempts,
+            AccountLockedUntil: response.accountLockedUntil,
             permissions: {
                 ViewCandidates: response.viewCandidates,
                 AccountManagement: response.accountManagement,

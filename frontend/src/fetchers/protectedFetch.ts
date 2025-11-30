@@ -1,6 +1,6 @@
 import { get } from "svelte/store";
 import { logout } from "../stores/AuthStore";
-import { pushNotification } from "../stores/DashboardStores/NotificationStore";
+import { pushNotification } from "../stores/NotificationStore";
 import { accessToken } from "../stores/TokenStore";
 
 const backendLink = import.meta.env.VITE_BACKEND_URL;

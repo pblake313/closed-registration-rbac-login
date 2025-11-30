@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { breadcrumbs } from "../../stores/DashboardStores/BreadCrumbStore";
     import HomeIcon from "../Icons/HomeIcon.svelte";
     import './BreadCrumbs.css'
     import FolderNextIcon from "../Icons/FolderNextIcon.svelte";
     import { page } from '$app/stores';
+    import { breadcrumbs } from "../../stores/BreadCrumbStore";
     $page.url.pathname
 </script>
 

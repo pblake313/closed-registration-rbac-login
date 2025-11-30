@@ -18,12 +18,10 @@
 
 <Notifications></Notifications>
 
-
 {#if $isAutoLoggingIn}
     <FullPageLoader></FullPageLoader>
 {:else}
     <div in:fade={{duration: 500, delay: 250}}>
         <slot />
     </div>
-    
 {/if}
