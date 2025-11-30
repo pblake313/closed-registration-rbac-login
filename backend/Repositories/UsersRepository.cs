@@ -249,7 +249,7 @@ namespace SAConstruction.Repositories
 
         public UserWithPermissions UpdateUserAutoLoginTime(int userId)
         {
-                        const string sql = @"
+            const string sql = @"
                 UPDATE Users.AccountData
                 SET 
                     LastAutoLogin = SYSUTCDATETIME(),
@@ -271,6 +271,7 @@ namespace SAConstruction.Repositories
 
         public int IncrementLoginAttemptsAndLock(int userId)
         {
+
             const string sql = @"
                 UPDATE Users.AccountData
                 SET 
@@ -396,7 +397,9 @@ namespace SAConstruction.Repositories
         {
             const string sql = @"
                 UPDATE Users.AccountData
-                SET LastPasswordResetEmailSentAt = SYSUTCDATETIME()
+                SET 
+                    LastPasswordResetEmailSentAt = SYSUTCDATETIME(),
+                    UpdatedAt = SYSUTCDATETIME()
                 WHERE UserId = (
                     SELECT UserId 
                     FROM Users.PasswordResetDocs

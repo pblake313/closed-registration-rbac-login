@@ -41,7 +41,7 @@ namespace SAConstruction.Middleware
             var refreshToken = http.Request.Cookies["refreshToken"];
 
             // if we have an accessToken
-            Console.WriteLine($"🔵 Original Access Token: {accessToken ?? "NULL"}");
+            // Console.WriteLine($"🔵 Original Access Token: {accessToken ?? "NULL"}");
             try
             {
 
@@ -81,7 +81,7 @@ namespace SAConstruction.Middleware
 
                 var userToSendDown = _userRepo.GetUserWithPermissionsById(userId);
 
-                Console.WriteLine("🟢 Original token still valid! Can Access Resources");
+                // Console.WriteLine("🟢 Original token still valid! Can Access Resources");
 
                 http.Items["userRequestingAccess"] = userToSendDown;
 
@@ -89,13 +89,13 @@ namespace SAConstruction.Middleware
             }
             catch (SecurityTokenExpiredException ex)
             {
-                Console.WriteLine("🟡 Access token EXPIRED:");
-                Console.WriteLine(ex.Message);
+                // Console.WriteLine("🟡 Access token EXPIRED:");
+                // Console.WriteLine(ex.Message);
                 // attempt to verify my refresh token...
 
                 try
                 {
-                    Console.WriteLine("🟣 Attempting Refresh.");
+                    // Console.WriteLine("🟣 Attempting Refresh.");
 
 
                     var tokenHandler = new JwtSecurityTokenHandler();
@@ -108,7 +108,7 @@ namespace SAConstruction.Middleware
                         IssuerSigningKey = new SymmetricSecurityKey(refreshKey),
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidateLifetime = true,    // 🔥 refresh token also has exp
+                        ValidateLifetime = true,   
                         ClockSkew = TimeSpan.Zero
                     };
 
@@ -147,7 +147,7 @@ namespace SAConstruction.Middleware
 
                     var userToSendDown = _userRepo.GetUserWithPermissionsById(userId);
 
-                    Console.WriteLine("🟢 New Access Token Created... Can Access Resources.");
+                    // Console.WriteLine("🟢 New Access Token Created... Can Access Resources.");
 
                     // return the new access token in the headers...
                     http.Response.Headers["x-new-access-token"] = newAccessToken;
@@ -164,7 +164,7 @@ namespace SAConstruction.Middleware
                 }
                 catch (Exception refreshExecption)
                 {
-                    Console.WriteLine("⛔ Invalid or expired access token.");
+                    // Console.WriteLine("⛔ Invalid or expired access token.");
                     context.Result = new BadRequestObjectResult(new
                     {
                         message = refreshExecption.Message,
@@ -174,7 +174,7 @@ namespace SAConstruction.Middleware
             }
             catch (SecurityTokenException ex)
             {
-                Console.WriteLine("⛔ Access token INVALID:");
+                // Console.WriteLine("⛔ Access token INVALID:");
                 // do not attempt to issue a new token with the refresh token, since we couldnt confirm the secret password.
                 context.Result = new BadRequestObjectResult(new
                 {
@@ -192,7 +192,7 @@ namespace SAConstruction.Middleware
             }
             catch (Exception ex)
             {
-                Console.WriteLine("⛔ Unknown error:");
+                // Console.WriteLine("⛔ Unknown error:");
                 // Console.WriteLine(ex.Message);
                 context.Result = new BadRequestObjectResult(new
                 {

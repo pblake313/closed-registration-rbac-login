@@ -60,8 +60,6 @@ namespace SAConstruction.Controllers
             try
             {
 
-                Console.WriteLine($"Getting userid {userId}");
-
                 var result = _userRepo.GetUserWithPermissionsById(userId);
 
                 if (result == null)

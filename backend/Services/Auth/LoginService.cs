@@ -36,8 +36,6 @@ public class LoginService
 
         if (!passwordMatches)
         {
-            Console.WriteLine($"Invalid password for user {userAccount.UserId}");
-
             _userRepo.IncrementLoginAttemptsAndLock(userAccount.UserId);
 
             throw new Exception("Invalid Email or Password");

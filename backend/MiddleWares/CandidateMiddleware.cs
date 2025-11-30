@@ -15,8 +15,6 @@ namespace SAConstruction.Middleware
 
             if (userObj is not UserWithPermissions user)
             {
-                Console.WriteLine("⛔ CandidateMiddleware: No authenticated user on context.");
-
                 // 🔥 Force logout just like BasicAuthMiddleware
                 context.Result = new BadRequestObjectResult(new
                 {
@@ -26,13 +24,9 @@ namespace SAConstruction.Middleware
                 return;
             }
 
-            Console.WriteLine($">>> CandidateMiddleware: User {user.UserId} ({user.Email}) BEFORE AdminController");
-
             // 🔹 Require admin permission
             if (!user.ViewCandidates)
             {
-                Console.WriteLine("⛔ CandidateMiddleware: User is not an admin (ViewCandidates = false).");
-
                 // 🔥 Also force logout if you want to boot them completely
                 context.Result = new BadRequestObjectResult(new
                 {

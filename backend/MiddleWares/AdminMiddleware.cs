@@ -26,8 +26,6 @@ namespace SAConstruction.Middleware
                 return;
             }
 
-            Console.WriteLine($">>> AdminMiddleware: User {user.UserId} ({user.Email}) BEFORE AdminController");
-
             // 🔹 Require admin permission
             if (!user.AccountManagement)
             {

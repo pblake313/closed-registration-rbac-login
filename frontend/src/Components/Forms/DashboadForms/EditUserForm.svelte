@@ -245,7 +245,7 @@
                                 <p><em>Resets After Login:</em> {userToEdit.PasswordAttempts || 0}</p>
                             </div>
                             <div class="singlePermission">
-                                <h4>Account Locked</h4>
+                                <h4>Account Locked Until</h4>
                                 <p><em>Resets After Login:</em> {formatDateTime(userToEdit.AccountLockedUntil)}</p>
                             </div>
 
