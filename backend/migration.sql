@@ -1,3 +1,8 @@
+-- 
+-- IMPORTANT!! UPDATE WITH YOUR EMAIL ADDRESS ON LINE 89!
+-- 
+
+
 -- 1) Create DB if it doesn't exist
 IF DB_ID('SaConstruction') IS NULL
 BEGIN
