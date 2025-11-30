@@ -8,8 +8,9 @@ The frontend is built with Svelte, providing a fast, clean, reactive UI for both
 Every protected route validates authentication tokens and permission scopes, ensuring users can only perform the actions they’ve been explicitly granted. Administrators can manage users, configure permissions, and oversee the system from a secure admin dashboard.
 
 ## Running Locally
-Frontend - See the frontend instructions inside the /frontend folder’s README.
-Backend & Database Seed - See the backend instructions and database seed setup in the /backend folder’s README.
+**Frontend** - See the frontend instructions inside the /frontend folder’s README.
+
+**Backend & Database Seed** - See the backend instructions and database seed setup in the /backend folder’s README.
 
 ## Project Photos
 ![Logo](./project-photos/home.png)
