@@ -59,7 +59,7 @@ namespace SAConstruction.Controllers
         {
             try
             {
-                Console.WriteLine("Test For new branc ruleset.");
+                Console.WriteLine("Test ew branc ruleset.");
 
                 var result = _userRepo.GetUserWithPermissionsById(userId);
 
