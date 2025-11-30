@@ -31,7 +31,8 @@ namespace SAConstruction.Repositories
                     DateCreated,
                     UpdatedAt,
                     LastPasswordResetEmailSentAt,
-                    LastLogin
+                    LastLogin,
+                    LastAutoLogin
                 FROM Users.AccountData
                 WHERE Email = @Email;
             ";
@@ -52,7 +53,9 @@ namespace SAConstruction.Repositories
                     DateCreated,
                     UpdatedAt,
                     LastPasswordResetEmailSentAt,
-                    LastLogin
+                    LastLogin,
+                    LastAutoLogin
+
                 FROM Users.AccountData
                 WHERE UserId = @UserId;
             ";
@@ -81,6 +84,8 @@ namespace SAConstruction.Repositories
                     u.DateCreated,
                     u.UpdatedAt,
                     u.LastPasswordResetEmailSentAt,
+                    u.LastLogin,
+                    u.LastAutoLogin,
                     COALESCE(p.JobPostings, 0)         AS JobPostings,
                     COALESCE(p.AccountManagement, 0)   AS AccountManagement,
                     COALESCE(p.ViewCandidates, 0)      AS ViewCandidates
@@ -97,7 +102,7 @@ namespace SAConstruction.Repositories
 
             var user = results.FirstOrDefault();
             if (user == null)
-                throw new Exception($"User with id {userId} not found.");
+                throw new Exception($"User not found.");
 
             return user;
         }
@@ -187,6 +192,7 @@ namespace SAConstruction.Repositories
                     u.UpdatedAt,
                     u.LastPasswordResetEmailSentAt,
                     u.LastLogin,
+                    u.LastAutoLogin,
                     COALESCE(p.JobPostings, 0)       AS JobPostings,
                     COALESCE(p.AccountManagement, 0) AS AccountManagement,
                     COALESCE(p.ViewCandidates, 0)    AS ViewCandidates
@@ -200,6 +206,63 @@ namespace SAConstruction.Repositories
 
             // if you prefer an array:
             return results.ToArray();
+        }
+
+        public UserWithPermissions UpdateUserLoginTime(int userId)
+        {
+            const string sql = @"
+                UPDATE Users.AccountData
+                SET 
+                    LastLogin = SYSUTCDATETIME(),
+                    UpdatedAt = SYSUTCDATETIME()
+                WHERE UserId = @UserId;
+            ";
+
+            bool updated = _dapper.ExecuteSql(sql, new { UserId = userId });
+
+            if (!updated)
+            {
+                throw new Exception($"Could not update last login time for user with id {userId}.");
+            }
+
+            // Return the current user data (including updated LastLogin)
+            return GetUserWithPermissionsById(userId);
+        }
+
+        public UserWithPermissions UpdateUserAutoLoginTime(int userId)
+        {
+                        const string sql = @"
+                UPDATE Users.AccountData
+                SET 
+                    LastAutoLogin = SYSUTCDATETIME(),
+                    UpdatedAt = SYSUTCDATETIME()
+                WHERE UserId = @UserId;
+            ";
+
+            bool updated = _dapper.ExecuteSql(sql, new { UserId = userId });
+
+            if (!updated)
+            {
+                throw new Exception($"Could not update last login time for user with id {userId}.");
+            }
+
+            // Return the current user data (including updated LastLogin)
+            return GetUserWithPermissionsById(userId);
+        }
+
+        public void DeleteUser(int userId)
+        {
+            const string sql = @"
+                DELETE FROM Users.AccountData
+                WHERE UserId = @UserId;
+            ";
+
+            var deleted = _dapper.ExecuteSql(sql, new { UserId = userId });
+
+            if (!deleted)
+            {
+                throw new Exception($"User with id {userId} not found or could not be deleted.");
+            }
         }
 
         public void UpdateLastResetTime(string refId)
@@ -219,7 +282,6 @@ namespace SAConstruction.Repositories
             if (!updated)
                 throw new Exception("Could not update last password reset time — invalid reference ID.");
         }
-
 
         public void UpdateUserPassword(string password, int userId)
         {
@@ -244,7 +306,6 @@ namespace SAConstruction.Repositories
                 throw new Exception("Could not update user password.");
             }
         }
-
 
         public static string GenerateRandomPassword(int length = 10)
         {

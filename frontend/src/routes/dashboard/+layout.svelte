@@ -6,10 +6,10 @@ import DashboardNav from '../../Components/DashboardNav.svelte';
     import './DashboardPage.css'
         import { browser } from '$app/environment';
     import Button from '../../Components/UI/Button.svelte';
-    import { logout } from '../../stores/AuthStore';
+    import { autoLoginAttempted, logout } from '../../stores/AuthStore';
     import MainLogo from '../../Components/SVG/MainLogo.svelte';
 
-    $: if (browser && $authenticatedUser === null) {
+    $: if (browser && $autoLoginAttempted && $authenticatedUser === null) {
         goto('/login');
     }
 </script>

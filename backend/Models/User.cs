@@ -15,5 +15,6 @@ namespace SAConstruction.Models
 
         public DateTime? LastPasswordResetEmailSentAt {get; set;}
         public DateTime? LastLogin {get; set;}
+        public DateTime? LastAutoLogin {get; set;}
     }
 }

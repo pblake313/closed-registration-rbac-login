@@ -59,23 +59,39 @@ namespace SAConstruction.Controllers
         {
             try
             {
+
                 Console.WriteLine($"Getting userid {userId}");
 
                 var result = _userRepo.GetUserWithPermissionsById(userId);
 
                 if (result == null)
                 {
-                    return NotFound(new { message = $"User with id {userId} was not found." });
+                    throw new Exception("User not found.");
                 }
 
                 return Ok(result);
             }
             catch (Exception ex)
             {
+
                 return BadRequest(new { message = ex.Message });
             }
         }
 
+        [HttpDelete("Delete-User/{userId:int}")]
+        public IActionResult DeleteUser(int userId)
+        {
+            try
+            {
+                _userRepo.DeleteUser(userId);
+                return Ok("User Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
     }
 }

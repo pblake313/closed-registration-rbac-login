@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { User } from "$lib/types/User";
-    import { formatReadableDate } from "../../../utils/dateFormatter";
+    import { formatDateTime, formatReadableDate } from "../../../utils/dateFormatter";
     import './AccountItem.css'
 
     export let user: User
@@ -8,11 +8,9 @@
 
 <a href="/dashboard/accounts/{user.UserId}" class="userAccountListItem">
     <div class="col">
-        <p>{user.FirstName}</p>
+        <p>{user.FirstName} {user.LastName}</p>
     </div>
-    <div class="col">
-        <p>{user.LastName}</p>
-    </div>
+
     <div class="col">
         <p>{user.Email}</p>
     </div>
@@ -25,7 +23,10 @@
             ].filter(Boolean).join(", ") || "-"}
         </p>
     </div>
+    <div class="col">
+        <p>{formatDateTime(user.LastLogin)}</p>
+    </div>
     <div class="col rev">
-        <p>{formatReadableDate(user.DateCreated)}</p>
+        <p>{formatDateTime(user.LastAutoLogin)}</p>
     </div>
 </a>

@@ -26,7 +26,8 @@ BEGIN
         DateCreated DATETIME2 NOT NULL CONSTRAINT DF_AccountData_DateCreated DEFAULT SYSUTCDATETIME(),
         UpdatedAt  DATETIME2 NOT NULL CONSTRAINT DF_AccountData_UpdatedAt  DEFAULT SYSUTCDATETIME(),
         LastPasswordResetEmailSentAt DATETIME2 NULL,
-        LastLogin DATETIME2 NULL
+        LastLogin DATETIME2 NULL,
+        LastAutoLogin DATETIME2 NULL,
     );
 END
 GO

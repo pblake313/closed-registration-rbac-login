@@ -1,4 +1,8 @@
-<div style="text-align: center;">
+<script>
+    import { fade } from "svelte/transition";
+
+</script>
+<div style="text-align: center;" in:fade={{duration: 300}}>
   <span class="loader"></span>
 </div>
 

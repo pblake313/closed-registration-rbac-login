@@ -34,6 +34,7 @@ export async function getAuthenticatedUser(){
         const response = await protectedFetch('/Account/Get-Authenticated-User', {
             method: 'GET'
         })
+
         const authUser: User = {
             UserId: response.userId,
             Email: response.email,
@@ -42,6 +43,8 @@ export async function getAuthenticatedUser(){
             LastName: response.lastName,
             LastPasswordResetEmailSentAt: response.lastPasswordResetEmailSentAt,
             UpdatedAt: response.updatedAt,
+            LastAutoLogin: response.lastAutoLogin,
+            LastLogin: response.lastLogin,
             permissions: {
                 ViewCandidates: response.viewCandidates,
                 AccountManagement: response.accountManagement,

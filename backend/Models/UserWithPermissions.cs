@@ -14,6 +14,7 @@ namespace SAConstruction.Models
         public DateTime? UpdatedAt { get; set; }
         public DateTime? LastPasswordResetEmailSentAt {get; set;}
         public DateTime? LastLogin {get; set;}
+        public DateTime? LastAutoLogin {get; set;}
 
         public bool JobPostings {get; set;}
         public bool AccountManagement {get; set;}

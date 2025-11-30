@@ -7,6 +7,7 @@ export interface User {
     UpdatedAt: string | null;
     LastPasswordResetEmailSentAt: string | null,
     LastLogin: string | null,
+    LastAutoLogin: string | null,
     permissions: {
         JobPostings: boolean;
         AccountManagement: boolean;

@@ -40,7 +40,8 @@ public class LoginService
         // 🔥 use TokenService instead of local methods
         var (accessToken, refreshToken) = _tokenService.GenerateTokenPair(userAccount);
 
-        var authenticatedUser = _userRepo.GetUserWithPermissionsById(userAccount.UserId);
+        // here update the users LastLoginTime
+        var authenticatedUser = _userRepo.UpdateUserLoginTime(userAccount.UserId);
 
         return new LoginResponse
         {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SAConstruction.Middleware;
-using SAConstruction.Models; 
+using SAConstruction.Models;
+using SAConstruction.Repositories;
 
 namespace SAConstruction.Controllers
 {
@@ -12,6 +13,15 @@ namespace SAConstruction.Controllers
 
     public class AccountController : ControllerBase
     {
+
+        private readonly UserRepository _userRepo;
+
+        public AccountController(IConfiguration config)
+        {
+            _userRepo = new UserRepository(config);
+            
+        }
+
         [HttpGet("Get-Authenticated-User")]
         public IActionResult GetAuthenticatedUser()
         {
@@ -26,25 +36,30 @@ namespace SAConstruction.Controllers
                     return Unauthorized(new { message = "User context not found" });
                 }
 
+
+                var authenticatedUser = _userRepo.UpdateUserAutoLoginTime(user.UserId);
+
                 // you can shape this however you want
                 return Ok(new
                 {
-                    user.UserId,
-                    user.Email,
-                    user.FirstName,
-                    user.LastName,
-                    user.DateCreated,
-                    user.UpdatedAt,
-                    user.LastPasswordResetEmailSentAt,
-                    user.JobPostings,
-                    user.AccountManagement,
-                    user.ViewCandidates,
+                    authenticatedUser.UserId,
+                    authenticatedUser.Email,
+                    authenticatedUser.FirstName,
+                    authenticatedUser.LastName,
+                    authenticatedUser.DateCreated,
+                    authenticatedUser.UpdatedAt,
+                    authenticatedUser.LastPasswordResetEmailSentAt,
+                    authenticatedUser.JobPostings,
+                    authenticatedUser.AccountManagement,
+                    authenticatedUser.ViewCandidates,
+                    authenticatedUser.LastAutoLogin,
+                    authenticatedUser.LastLogin
                 });
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
-        }
+        } 
     }
 }

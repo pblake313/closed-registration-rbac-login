@@ -9,6 +9,7 @@
     import FormError from '../../../../Components/UI/FormError.svelte';
     import EditUserForm from '../../../../Components/Forms/DashboadForms/EditUserForm.svelte';
     import DashTop from '../../../../Components/DashboardComponents/DashTop.svelte';
+    import { goto } from '$app/navigation';
 
     // define the shape of a single crumb
     type Crumb = {
@@ -36,8 +37,6 @@
 
             const res = await protectedFetch(`/Admin/Get-User/${userId}`)
 
-            console.log(res)
-
             userToEdit = {
                 UserId: res.userId,
                 Email: res.email,
@@ -46,15 +45,21 @@
                 DateCreated: res.dateCreated,
                 UpdatedAt: res.updatedAt,
                 LastPasswordResetEmailSentAt: res.lastPasswordResetEmailSentAt,
-                LastLogin: res.LastLogin,
+                LastLogin: res.lastLogin,
+                LastAutoLogin: res.lastAutoLogin,
                 permissions : {
                     JobPostings: res.jobPostings,
                     AccountManagement: res.accountManagement,
                     ViewCandidates: res.viewCandidates
                 }
             }
-        } catch {
-            
+        } catch (error: any) {
+            console.log(error)
+            if (error?.data?.message === 'User not found.'){
+                goto('/dashboard/accounts')
+                return
+            }
+            fetchErrorMessage = error?.data?.message || error.message || 'An unknown error has occurred.'
         } finally{
             isFetchingUser = false
         }
@@ -89,7 +94,9 @@
             errorTitle={'Fetch User Error'}
         ></FormError>
     {:else}
-        <EditUserForm {userToEdit}></EditUserForm>
+        {#if userToEdit}
+            <EditUserForm {userToEdit}></EditUserForm>
+        {/if}
     {/if}
     
     

@@ -34,6 +34,8 @@ export async function fetchAllAccounts() {
                 LastName: user.lastName,
                 UpdatedAt: user.updatedAt,
                 DateCreated: user.dateCreated,
+                LastLogin: user.lastLogin,
+                LastAutoLogin: user.lastAutoLogin,
                 LastPasswordResetEmailSentAt: user.lastPasswordResetEmailSentAt,
                 permissions: {
                     JobPostings: user.jobPostings,
@@ -88,4 +90,12 @@ export function upsertUserIntoAllUserAccounts(user: User) {
 
         return updated;
     });
+}
+
+export function removeUserFromAccountsArray(userId: number) {
+    if (userId == null) return;
+
+    allUserAccounts.update((current) =>
+        current.filter((u) => u.UserId !== userId)
+    );
 }
