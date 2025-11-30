@@ -49,7 +49,7 @@
             <button class="homeButton" on:click={(e)=> {goto('/'), mobileOpen = false}}>
           
                 <div class="deskML">
-                    <MainLogo height={'45px'}></MainLogo>
+                    <MainLogo height={'35px'}></MainLogo>
                 </div>
                 <div class="mobileML">
                     <MainLogo height={'35px'}></MainLogo>
@@ -61,16 +61,17 @@
     
         <div class="navRight">
             <div class="links">
-                {#if $authenticatedUser}
-                    <a href="/dashboard">Dashboard</a>
-                {/if}
-
                 <a href="/" class:activeNavLink={$page.url.pathname === '/'}>Home</a>
-                <a href="/login" class:activeNavLink={$page.url.pathname === '/login'}>Login</a>
-                
-                <div style="margin-left: 25px;">
-                    <Button on:click={(e)=> goto('/estimate')}>Free Estimate</Button>
+
+                <div style="margin-left: 15px;">
+                    {#if $authenticatedUser}
+                        <Button usePadding={false} on:click={(e)=> goto('/dashboard')}>Dashboard</Button>
+                    {:else}
+                        <Button usePadding={false} on:click={(e)=> goto('/login')}>Login</Button>
+                    {/if}
                 </div>
+                
+      
             </div>
             {#if !mobileOpen}
                 <button id="MobileMenuBtn" on:click={toggleMobile}>

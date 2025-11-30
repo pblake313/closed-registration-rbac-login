@@ -1,6 +1,6 @@
 .wrapNav {
     width: 90%;
-    max-width: 1600px;
+    max-width: 1250px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -87,7 +87,7 @@
 
 
 .links a.activeNavLink {
-    border-bottom: 2px solid #FF7B00;
+    border-bottom: 2px solid #0667d6;
 }
 
 .fullWidth {
@@ -233,7 +233,7 @@
     content: '';
     height: 8px;
     width: 8px;
-    background-color: #FF7B00;
+    background-color: #0667d6;
     position: absolute;
     top: 50%;
     left: 0px;
@@ -279,7 +279,7 @@
     transition: .4s;
 }
 .mobileActiveLink {
-    border-left: 3px solid #FF7B00;
+    border-left: 3px solid #0667d6;
     padding-left: 10px;
     transition: .5s;
 }

@@ -50,8 +50,8 @@
     {#if loading}
         <Loader></Loader>
     {:else}
-
-        <Button on:click={testCandidates}>Test Candidates</Button>
+        <br>
+        <Button usePadding={false} on:click={testCandidates}>Test Candidates</Button>
     {/if}
 
     <br><br>

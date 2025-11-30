@@ -13,6 +13,9 @@
 
 </script>
 
+<svelte:head>
+    <title>RBAC Project</title>
+</svelte:head>
 
 
 

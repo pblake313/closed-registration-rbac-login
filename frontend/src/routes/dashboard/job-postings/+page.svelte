@@ -47,7 +47,8 @@
     {#if loading}
         <Loader></Loader>
     {:else}
-        <Button on:click={testCandidates}>Test Job Postings</Button>
+        <br>
+        <Button usePadding={false} on:click={testCandidates}>Test Job Postings</Button>
     {/if}
 
     <br><br>
